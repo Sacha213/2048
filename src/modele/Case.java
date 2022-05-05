@@ -5,8 +5,9 @@ public class Case {
     private Jeu jeu;
 
 
-    public Case(int _valeur) {
+    public Case(int _valeur, Jeu _jeu) {
         valeur = _valeur;
+        jeu = _jeu;
     }
 
     public int getValeur() {
@@ -15,12 +16,19 @@ public class Case {
 
     public void move (Direction d) {
         Case v = jeu.get(d, this);
+
         while (v.valeur != -1){
+
             if (v == null) {
                 jeu.move(d, this);
             }
-            if (v.valeur == this.valeur) {
 
+            //Fusion
+            if (v.valeur == this.valeur) {
+              v.valeur=this.valeur*2;
+              //Suppression de la case
+                jeu.delete(this);
+                break;
             }
         }
     }
