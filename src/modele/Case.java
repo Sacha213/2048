@@ -13,24 +13,31 @@ public class Case {
     public int getValeur() {
         return valeur;
     }
+    public void setValeur(int _valeur) {
+        valeur = _valeur;
+    }
 
     public void move (Direction d) {
-        Case v = jeu.get(d, this);
+        if(valeur == 0) return;
 
-        while (v.valeur != -1){
-
-            if (v == null) {
-                jeu.move(d, this);
+        Case caseAdj;
+        do{
+            caseAdj = jeu.getCaseAdj(d, this);
+            if (caseAdj.getValeur() == 0) {
+                System.out.println("appel jeu.moveCase()");
+                jeu.moveCase(d, this);
+                System.out.println("retour jeu.moveCase()");
             }
 
             //Fusion
-            if (v.valeur == this.valeur) {
-              v.valeur=this.valeur*2;
+            if (caseAdj.valeur == this.valeur) {
+              caseAdj.valeur=this.valeur*2;
               //Suppression de la case
-                jeu.delete(this);
-                break;
+              jeu.delete(this);
+              break;
             }
-        }
+
+        }while (caseAdj.valeur == 0);
     }
 
 }
