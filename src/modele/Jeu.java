@@ -117,13 +117,16 @@ public class Jeu extends Observable {
                 }
             //}
         //}.start();
-        drawCase();
+        if (!drawCase()) endGame();
 
         setChanged();
         notifyObservers();
     }
 
-    public void drawCase () {
+    public boolean drawCase () {
+        //on regarde si la partie est finie
+        if (boardIsFull()) return false;
+
         int x,y,r;
         //choisir une case libre aléatoire
         do {
@@ -134,6 +137,20 @@ public class Jeu extends Observable {
         r = rnd.nextInt(2);
         //entrer la valeur 2 ou 4 dans la case
         tabCases[x][y].setValeur((r + 1) * 2);
+        return true;
+    }
+
+    public boolean boardIsFull () {
+        for (int x = 0; x < tabCases.length; x++) {
+            for (int y = 0; y < tabCases.length; y++) {
+                if (tabCases[x][y].getValeur() == 0) return false;
+            }
+        }
+        return true;
+    }
+
+    public void endGame () {
+
     }
 
 
