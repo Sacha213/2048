@@ -37,14 +37,16 @@ public class Case {
      * Décide si la case doit de déplacer ou fusionner dans la direction d
      * @param d Direction dans laquelle la case veut se déplacer
      */
-    public void move (Direction d) {
-        if(valeur == 0) return;
+    public boolean move (Direction d) {
+        boolean ret = false;
+        if(valeur == 0) return ret;
 
         Case caseAdj;
         do{
             caseAdj = jeu.getCaseAdj(d, this);
             if (caseAdj.getValeur() == 0) {
                 jeu.moveCase(d, this);
+                ret = true;
             }
 
             //Fusion
@@ -52,10 +54,12 @@ public class Case {
               caseAdj.valeur=this.valeur*2;
               //Suppression de la case
               jeu.delete(this);
+              ret = true;
               break;
             }
 
         }while (caseAdj.valeur == 0);
+        return ret;
     }
 
 }

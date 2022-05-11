@@ -19,7 +19,7 @@ import java.util.Observer;
  * Classe gérant la version graphique du jeu 2048
  */
 public class Swing2048 extends JFrame implements Observer {
-    private static final int PIXEL_PER_SQUARE = 60;
+    private static final int PIXEL_PER_SQUARE = 90;
     // tableau de cases : i, j -> case graphique
     private JLabel[][] tabC;
     private Jeu jeu;
@@ -33,7 +33,20 @@ public class Swing2048 extends JFrame implements Observer {
     public Swing2048(Jeu _jeu) {
         jeu = _jeu;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(jeu.getSize() * PIXEL_PER_SQUARE, jeu.getSize() * PIXEL_PER_SQUARE);
+        setSize(jeu.getSize() * PIXEL_PER_SQUARE, (jeu.getSize() +1) * (PIXEL_PER_SQUARE));
+        JPanel contentPane = new JPanel(new BorderLayout());
+        JPanel contentInfo = new JPanel();
+        contentInfo.setPreferredSize(new Dimension(jeu.getSize() * PIXEL_PER_SQUARE, PIXEL_PER_SQUARE));
+        contentInfo.setLayout(new BoxLayout(contentInfo,BoxLayout.X_AXIS));
+        contentInfo.setBackground(Color.blue);
+        JLabel title = new JLabel("2048");
+        title.setFont(new Font("Serif", Font.PLAIN, 40));
+        contentInfo.add(title);
+
+        contentPane.add(contentInfo, BorderLayout.NORTH);
+
+
+        setTitle("2/0/4/8");
         tabC = new JLabel[jeu.getSize()][jeu.getSize()];
 
         //Remplissage des couleurs
@@ -52,21 +65,23 @@ public class Swing2048 extends JFrame implements Observer {
         colorMap.put(2048, new Color(198, 182, 23));
         colorMap.put(4096, new Color(21, 21, 21));
 
-        JPanel contentPane = new JPanel(new GridLayout(jeu.getSize(), jeu.getSize()));
+        JPanel contentGame = new JPanel(new GridLayout(jeu.getSize(), jeu.getSize()));
 
         for (int i = 0; i < jeu.getSize(); i++) {
             for (int j = 0; j < jeu.getSize(); j++) {
-                Border border = BorderFactory.createLineBorder(Color.darkGray, 5);
+                Border border = BorderFactory.createLineBorder(Color.darkGray, 1);
                 tabC[i][j] = new JLabel();
                 tabC[i][j].setBorder(border);
                 tabC[i][j].setHorizontalAlignment(SwingConstants.CENTER);
                 tabC[i][j].setOpaque(true);
                 tabC[i][j].setForeground(new Color(255, 255, 255));
+                tabC[i][j].setFont(new Font("", Font.PLAIN, 23));
 
-                contentPane.add(tabC[i][j]);
+                contentGame.add(tabC[i][j]);
 
             }
         }
+        contentPane.add(contentGame, BorderLayout.CENTER);
         setContentPane(contentPane);
         ajouterEcouteurClavier();
         rafraichir();
@@ -80,31 +95,51 @@ public class Swing2048 extends JFrame implements Observer {
      * Correspond à la fonctionnalité de Vue : affiche les données du modèle
      */
     private void rafraichir()  {
+        //si la partie n'est pas finie
+        if (jeu.gameRunning) {
+            SwingUtilities.invokeLater(new Runnable() { // demande au processus graphique de réaliser le traitement
+                @Override
+                public void run() {
+                    for (int i = 0; i < jeu.getSize(); i++) {
+                        for (int j = 0; j < jeu.getSize(); j++) {
+                            Case c = jeu.getCase(i, j);
+                            int val = c.getValeur();
 
+                            if (val == 0) {
+
+                                tabC[i][j].setText("");
+
+                            } else {
+                                tabC[i][j].setText(val + "");
+                            }
+                            tabC[i][j].setBackground(colorMap.get(val));
+
+
+                        }
+                    }
+                }
+            });
+        }
+        //si la partie est finie
+        else {
+            gameOver();
+        }
+    }
+
+    private void gameOver(){
+        System.out.println("game over");
         SwingUtilities.invokeLater(new Runnable() { // demande au processus graphique de réaliser le traitement
             @Override
             public void run() {
-                for (int i = 0; i < jeu.getSize(); i++) {
-                    for (int j = 0; j < jeu.getSize(); j++) {
-                        Case c = jeu.getCase(i, j);
-                        int val = c.getValeur();
-
-                        if (val == 0) {
-
-                            tabC[i][j].setText("");
-
-                        } else {
-                            tabC[i][j].setText(val + "");
-                        }
-                        tabC[i][j].setBackground(colorMap.get(val));
 
 
-                    }
-                }
+                JPanel contentPane = new JPanel(new BorderLayout());
+                contentPane.add(new JLabel("Test "));
+                setContentPane(contentPane);
+                pack();
+                setSize(jeu.getSize() * PIXEL_PER_SQUARE, jeu.getSize() * PIXEL_PER_SQUARE);
             }
         });
-
-
     }
 
     /**
@@ -130,4 +165,13 @@ public class Swing2048 extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         rafraichir();
     }
+
+    /* NE PAS TOUCHER
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        g.drawOval(40, 40, 20, 20);
+    }
+     */
+
 }

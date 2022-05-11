@@ -4,6 +4,11 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Random;
+/*
+TODO:
+    *fonction end game
+    *plusieurs fusions ?
+*/
 
 /**
  * Classe qui gère la grille de jeu
@@ -12,7 +17,7 @@ public class Jeu extends Observable {
 
     private Case[][] tabCases;
     private static Random rnd = new Random(4);
-
+    public boolean gameRunning = true;
     private HashMap<Case,Point> map;
 
     public Jeu(int size) {
@@ -106,21 +111,25 @@ public class Jeu extends Observable {
      * @param d Direction dans laquelle déplacer toutes les cases
      */
     public void update(Direction d){
-        //new Thread() { // permet de libérer le processus graphique ou de la console
-            //public void run() {
+        new Thread() { // permet de libérer le processus graphique ou de la console
+            public void run() {
                 //parcours du tableau
+                boolean moved = false;
+
                 switch (d) {
                     case gauche, haut:
                         for (int x = 0; x < tabCases.length; x++) {
                             for (int y = 0; y < tabCases.length; y++) {
-                                tabCases[x][y].move(d);
+                                //on regarde s'il y a eu un mouvement
+                                if (tabCases[x][y].move(d)) moved = true;
                             }
                         }
                         break;
                     case droite, bas:
                         for (int x = tabCases.length - 1; x >= 0; x--) {
                             for (int y = tabCases.length -1; y >= 0; y--) {
-                                tabCases[x][y].move(d);
+                                //on regarde s'il y a eu un mouvement
+                                if (tabCases[x][y].move(d)) moved = true;
                             }
                         }
                         break;
@@ -128,12 +137,59 @@ public class Jeu extends Observable {
                         System.out.println("default");
                         break;
                 }
-            //}
-        //}.start();
-        if (!drawCase()) endGame();
+                if (moved) {
+                    drawCase();
+                }
+                setChanged();
+                notifyObservers();
 
-        setChanged();
-        notifyObservers();
+                //on regarde si la partie est finie
+                if(isGameOver()){
+                    System.out.println("Partie fini !");
+                    try {
+                        sleep(200);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println("Partie fini !");
+                    gameRunning = false;
+                    setChanged();
+                    notifyObservers();
+                }
+
+
+            }
+        }.start();
+
+
+
+    }
+
+    /**
+     * Fonction qui vérifie si la partie est finie, c'est à dire si un mouvement est possible
+     * @return true si la partie est finie, faux sinon
+     */
+    private boolean isGameOver(){
+        boolean gameOver=true;
+        return gameOver;
+        /*
+        for (int x = 0; x < tabCases.length; x++) {
+            for (int y = 0; y < tabCases.length; y++) {
+                Case c = tabCases[x][y];
+                int caseValeur = c.getValeur();
+                //on regarde si la case est libre
+                if (caseValeur == 0) return false;
+                //on regarde toutes les cases adjacentes
+                if(getCaseAdj(Direction.gauche,c).getValeur() == caseValeur)return false;
+                if(getCaseAdj(Direction.droite,c).getValeur() == caseValeur)return false;
+                if(getCaseAdj(Direction.haut,c).getValeur() == caseValeur)return false;
+                if(getCaseAdj(Direction.bas,c).getValeur() == caseValeur)return false;
+            }
+        }
+
+        return gameOver;
+
+         */
     }
 
     /**
@@ -143,40 +199,17 @@ public class Jeu extends Observable {
      * @return true si le tirage est effectué avec succès, false si la grille est pleine
      */
     public boolean drawCase () {
-        //on regarde si la partie est finie
-        if (boardIsFull()) return false;
-
         int x,y,r;
         //choisir une case libre aléatoire
         do {
-            x = rnd.nextInt(3);
-            y = rnd.nextInt(3);
+            x = rnd.nextInt(4);
+            y = rnd.nextInt(4);
         }while (tabCases[x][y].getValeur() != 0);
 
         r = rnd.nextInt(2);
         //entrer la valeur 2 ou 4 dans la case
         tabCases[x][y].setValeur((r + 1) * 2);
         return true;
-    }
-
-    /**
-     * Vérifie si une case est disponible (valeur = 0) dans la grille
-     * @return true si la grille est pleine, false sinon
-     */
-    public boolean boardIsFull () {
-        for (int x = 0; x < tabCases.length; x++) {
-            for (int y = 0; y < tabCases.length; y++) {
-                if (tabCases[x][y].getValeur() == 0) return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Termine la  partie en cours
-     */
-    public void endGame () {
-
     }
 
     /**
@@ -196,25 +229,21 @@ public class Jeu extends Observable {
                                 tabCases[i][j] = new Case(0, Jeu.this);
                                 break;
                             case 1:
-                                tabCases[i][j] = new Case(256, Jeu.this);
+                                tabCases[i][j] = new Case(2, Jeu.this);
                                 break;
                             case 2:
-                                tabCases[i][j] = new Case(512,Jeu.this);
+                                tabCases[i][j] = new Case(4,Jeu.this);
                                 break;
                         }
                         Point p = new Point(i,j);
                         map.put(tabCases[i][j], p);
                     }
                 }
+                setChanged();
+                notifyObservers();
             }
 
         }.start();
-
-
-        setChanged();
-        notifyObservers();
-
-
     }
 
 }
