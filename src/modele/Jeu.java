@@ -168,10 +168,10 @@ public class Jeu extends Observable {
                                 tabCases[i][j] = new Case(0, Jeu.this);
                                 break;
                             case 1:
-                                tabCases[i][j] = new Case(2, Jeu.this);
+                                tabCases[i][j] = new Case(256, Jeu.this);
                                 break;
                             case 2:
-                                tabCases[i][j] = new Case(4,Jeu.this);
+                                tabCases[i][j] = new Case(512,Jeu.this);
                                 break;
                         }
                         Point p = new Point(i,j);

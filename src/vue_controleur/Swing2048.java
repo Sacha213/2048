@@ -21,6 +21,7 @@ public class Swing2048 extends JFrame implements Observer {
     private JLabel[][] tabC;
     private Jeu jeu;
 
+    private HashMap<Integer, Color> colorMap;
 
     public Swing2048(Jeu _jeu) {
         jeu = _jeu;
@@ -28,6 +29,21 @@ public class Swing2048 extends JFrame implements Observer {
         setSize(jeu.getSize() * PIXEL_PER_SQUARE, jeu.getSize() * PIXEL_PER_SQUARE);
         tabC = new JLabel[jeu.getSize()][jeu.getSize()];
 
+        //Remplissage des couleurs
+        colorMap = new HashMap<Integer, Color>();
+        colorMap.put(0, new Color(255, 255, 255));
+        colorMap.put(2, new Color(89, 216, 230));
+        colorMap.put(4, new Color(0, 146, 178));
+        colorMap.put(8, new Color(0, 103, 166));
+        colorMap.put(16, new Color(53, 71, 140));
+        colorMap.put(32, new Color(85, 50, 133));
+        colorMap.put(64, new Color(123, 31, 162));
+        colorMap.put(128, new Color(171, 71, 188));
+        colorMap.put(256, new Color(239, 83, 80));
+        colorMap.put(512, new Color(148, 9, 13));
+        colorMap.put(1024, new Color( 69, 0, 3));
+        colorMap.put(2048, new Color(198, 182, 23));
+        colorMap.put(4096, new Color(21, 21, 21));
 
         JPanel contentPane = new JPanel(new GridLayout(jeu.getSize(), jeu.getSize()));
 
@@ -37,7 +53,8 @@ public class Swing2048 extends JFrame implements Observer {
                 tabC[i][j] = new JLabel();
                 tabC[i][j].setBorder(border);
                 tabC[i][j].setHorizontalAlignment(SwingConstants.CENTER);
-
+                tabC[i][j].setOpaque(true);
+                tabC[i][j].setForeground(new Color(255, 255, 255));
 
                 contentPane.add(tabC[i][j]);
 
@@ -63,14 +80,16 @@ public class Swing2048 extends JFrame implements Observer {
                 for (int i = 0; i < jeu.getSize(); i++) {
                     for (int j = 0; j < jeu.getSize(); j++) {
                         Case c = jeu.getCase(i, j);
+                        int val = c.getValeur();
 
-                        if (c.getValeur() == 0) {
+                        if (val == 0) {
 
                             tabC[i][j].setText("");
 
                         } else {
-                            tabC[i][j].setText(c.getValeur() + "");
+                            tabC[i][j].setText(val + "");
                         }
+                        tabC[i][j].setBackground(colorMap.get(val));
 
 
                     }
