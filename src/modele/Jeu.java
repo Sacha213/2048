@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Random;
 
+/**
+ * Classe qui gère la grille de jeu
+ */
 public class Jeu extends Observable {
 
     private Case[][] tabCases;
@@ -19,17 +22,32 @@ public class Jeu extends Observable {
         rnd();
     }
 
+    /**
+     * Getter pour accéder à la taille de la grille de jeu
+     * @return tabCase.length
+     */
     public int getSize() {
         return tabCases.length;
     }
 
-    public Case getCase(int i, int j) {
-        return tabCases[i][j];
+    /**
+     * Retourne la case de parametres x et y
+     * @param x Ligne de la case à retourner
+     * @param y Colonne de la case à retourner
+     * @return Case de coordonnées x et y
+     */
+    public Case getCase(int x, int y) {
+        return tabCases[x][y];
     }
 
+    /**
+     * Retourne la case adjacente de la case c dans la direction d
+     * @param d Direction de recherche
+     * @param c Case à partir de laquelle on recherche
+     * @return Case adjacente de la case c dans la direction d ou une case de valeur -1 si on atteint une bordure
+     */
     public Case getCaseAdj(Direction d, Case c) {
         Point p = (Point)map.get(c).clone();
-        System.out.println("exec getCaseAdj x: " + p.x + ", y: " + p.y + ", d : " + d);
         //se décale d'une case dans la direction d
         switch(d) {
             case gauche :
@@ -49,64 +67,59 @@ public class Jeu extends Observable {
                 break;
         }
         // retourne une case contenant -1 si on dépasse les bordures
-        Case ret = (p.x<0 || p.y <0 || p.x>=this.getSize() || p.y>=this.getSize())?new Case(-1, this):tabCases[p.x][p.y];
-        System.out.println("valeur case adj : " + ret.getValeur());
-        return ret;
+        return (p.x<0 || p.y <0 || p.x>=this.getSize() || p.y>=this.getSize())?new Case(-1, this):tabCases[p.x][p.y];
     }
 
-
+    /**
+     * Déplace la case c dans la direction
+     * @param d Direction dans laquelle déplacer la case
+     * @param c Case à déplacer
+     */
     public void moveCase(Direction d, Case c) {
-        System.out.println("exec jeu.moveCase()");
         Case caseAdj = getCaseAdj(d, c);
         Point pAdj = map.get(caseAdj);
 
         //On bouge la case dans le tableau
         tabCases[pAdj.x][pAdj.y] = c;
         //On libère la case initiale
-        System.out.println("appel jeu.delete()");
         delete(c);
         //On bouge la case dans la map
         map.put(c, pAdj);
 
     }
 
+    /**
+     * Supprime la case en mettant sa valeur à 0
+     * @param c Case à supprimer
+     */
     public void delete(Case c) {
-        System.out.println("exec jeu.delete()");
         //récupère la position de la case a supprimer
         Point p = map.get(c);
         tabCases[p.x][p.y] = new Case(0, this);
         map.put(tabCases[p.x][p.y],p);
     }
 
+    /**
+     * Fonction principale qui déplace toutes les cases dans un direction
+     * Le balayage se fait de gauche à droite et de haut en bas pour les direction "gauche" et "haut"
+     * Le balayage se fait de droite à gauche et de bas en haut pour les direction "droite" et "bas"
+     * @param d Direction dans laquelle déplacer toutes les cases
+     */
     public void update(Direction d){
         //new Thread() { // permet de libérer le processus graphique ou de la console
             //public void run() {
-                System.out.println("parcours");
                 //parcours du tableau
                 switch (d) {
                     case gauche, haut:
-                        System.out.println("parcours a gauche");
                         for (int x = 0; x < tabCases.length; x++) {
                             for (int y = 0; y < tabCases.length; y++) {
-                                System.out.println("move case x: " + x + ", y : "+ y);
                                 tabCases[x][y].move(d);
                             }
                         }
                         break;
-                    case droite:
-                        System.out.println("parcours a droite");
-                        for (int x = 0; x < tabCases.length; x++) {
+                    case droite, bas:
+                        for (int x = tabCases.length - 1; x >= 0; x--) {
                             for (int y = tabCases.length -1; y >= 0; y--) {
-                                System.out.println("move case x: " + x + ", y : "+ y);
-                                tabCases[x][y].move(d);
-                            }
-                        }
-                        break;
-                    case bas:
-                        System.out.println("parcours en bas");
-                        for (int x = tabCases.length -1; x >= 0; x--) {
-                            for (int y = 0; y < tabCases.length; y++) {
-                                System.out.println("move case x: " + x + ", y : "+ y);
                                 tabCases[x][y].move(d);
                             }
                         }
@@ -123,6 +136,12 @@ public class Jeu extends Observable {
         notifyObservers();
     }
 
+    /**
+     * Tire une nouvelle case dans la grille de jeu
+     * La position de la nouvelle case est aléatoire parmi celles libres
+     * La valeur de la nouvelle case est aléatoire, soit 2, soit 4
+     * @return true si le tirage est effectué avec succès, false si la grille est pleine
+     */
     public boolean drawCase () {
         //on regarde si la partie est finie
         if (boardIsFull()) return false;
@@ -140,6 +159,10 @@ public class Jeu extends Observable {
         return true;
     }
 
+    /**
+     * Vérifie si une case est disponible (valeur = 0) dans la grille
+     * @return true si la grille est pleine, false sinon
+     */
     public boolean boardIsFull () {
         for (int x = 0; x < tabCases.length; x++) {
             for (int y = 0; y < tabCases.length; y++) {
@@ -149,11 +172,16 @@ public class Jeu extends Observable {
         return true;
     }
 
+    /**
+     * Termine la  partie en cours
+     */
     public void endGame () {
 
     }
 
-
+    /**
+     * Tire une nouvelle grille aléatoirement, le nombre de cases remplies est aléatoire
+     */
     public void rnd() {
         new Thread() { // permet de libérer le processus graphique ou de la console
             public void run() {

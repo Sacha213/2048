@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Classe gérant la version graphique du jeu 2048
+ */
 public class Swing2048 extends JFrame implements Observer {
     private static final int PIXEL_PER_SQUARE = 60;
     // tableau de cases : i, j -> case graphique
@@ -23,6 +26,10 @@ public class Swing2048 extends JFrame implements Observer {
 
     private HashMap<Integer, Color> colorMap;
 
+    /**
+     * Constructeur de la classe
+     * @param _jeu Référence sur la grille du jeu
+     */
     public Swing2048(Jeu _jeu) {
         jeu = _jeu;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

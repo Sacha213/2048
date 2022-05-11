@@ -7,15 +7,19 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Classe gérant la version console du jeu 2048
+ */
 public class Console2048 extends Thread implements Observer {
 
     private Jeu jeu;
 
-
-
+    /**
+     * Constructeur de la classe
+     * @param _jeu Référence sur la grille du jeu
+     */
     public Console2048(Jeu _jeu) {
         jeu = _jeu;
-
     }
 
 
