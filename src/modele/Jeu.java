@@ -170,9 +170,10 @@ public class Jeu extends Observable {
      * @return true si la partie est finie, faux sinon
      */
     private boolean isGameOver(){
-        boolean gameOver=true;
-        return gameOver;
+        return true;
         /*
+        boolean gameOver=false;
+
         for (int x = 0; x < tabCases.length; x++) {
             for (int y = 0; y < tabCases.length; y++) {
                 Case c = tabCases[x][y];
@@ -188,8 +189,7 @@ public class Jeu extends Observable {
         }
 
         return gameOver;
-
-         */
+        */
     }
 
     /**

@@ -7,10 +7,7 @@ import modele.Jeu;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -128,18 +125,39 @@ public class Swing2048 extends JFrame implements Observer {
 
     private void gameOver(){
         System.out.println("game over");
-        SwingUtilities.invokeLater(new Runnable() { // demande au processus graphique de réaliser le traitement
+
+        JDialog jd = new JDialog(this);
+
+        jd.setLayout(new FlowLayout());
+
+        jd.setBounds(500, 300, 400, 300);
+
+        JLabel gameOver = new JLabel("Game Over");
+        JLabel message = new JLabel("Voulez vous rejouer?");
+
+        JButton rejouer = new JButton("Rejouer");
+        JButton quitter = new JButton("Quitter");
+        rejouer.addActionListener(new ActionListener() {
             @Override
-            public void run() {
-
-
-                JPanel contentPane = new JPanel(new BorderLayout());
-                contentPane.add(new JLabel("Test "));
-                setContentPane(contentPane);
-                pack();
-                setSize(jeu.getSize() * PIXEL_PER_SQUARE, jeu.getSize() * PIXEL_PER_SQUARE);
+            public void actionPerformed(ActionEvent e) {
+                jd.setVisible(false);
+                System.out.println("Rejouer button pressed.");
             }
         });
+
+        quitter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jd.setVisible(false);
+                System.out.println("Quitter button pressed.");
+            }
+        });
+
+        jd.add(gameOver);
+        jd.add(message);
+        jd.add(rejouer);
+        jd.add(quitter);
+        jd.setVisible(true);
     }
 
     /**
