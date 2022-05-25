@@ -35,42 +35,47 @@ public class Swing2048 extends JFrame implements Observer {
 
         //JPanel principale
         JPanel contentPane = new JPanel(new BorderLayout());
+        contentPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         //JPanel pour les information
         JPanel contentInfo = new JPanel();
         contentInfo.setPreferredSize(new Dimension(jeu.getSize() * PIXEL_PER_SQUARE, PIXEL_PER_SQUARE));
-        contentInfo.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
+        contentInfo.setLayout(new BorderLayout());
 
 
 
         //Affichage du titre
+        JPanel pTitle = new JPanel();
         JLabel title = new JLabel("2048");
-        title.setFont(new Font("Serif", Font.PLAIN, 40));
-        c.gridx = 0;
-        c.gridy = 0;
-        contentInfo.add(title,c);
+        title.setForeground(Color.darkGray);
+        title.setFont(new Font("Serif", Font.BOLD, 40));
+        pTitle.add(title);
 
-        //JPanel space = new JPanel();
-        //space.setSize(200,0);
-        //contentInfo.add(space);
+        contentInfo.add(pTitle, BorderLayout.WEST);
+
+        JPanel nombre = new JPanel();
 
         //Affichage du score
         JPanel jScore = new JPanel();
         jScore.setLayout(new BorderLayout());
-        jScore.setPreferredSize(new Dimension(70, 50));
-        jScore.setBackground(Color.gray);
+        jScore.setPreferredSize(new Dimension(90, 40));
+        jScore.setBackground(Color.lightGray);
 
 
+        JLabel titleScore = new JLabel("Score");
+        titleScore.setFont(new Font("Serif", Font.PLAIN, 15));
+        titleScore.setForeground(Color.white);
+        titleScore.setHorizontalAlignment(SwingConstants.CENTER);
+        jScore.add(titleScore, BorderLayout.NORTH);
 
-        //JLabel titleScore = new JLabel("Score");
-        //titleScore.setFont(new Font("Serif", Font.PLAIN, 10));
-        //jScore.add(titleScore);
+        JLabel nowScore = new JLabel("2048");
+        nowScore.setFont(new Font("Serif", Font.BOLD, 20));
+        nowScore.setForeground(Color.white);
+        nowScore.setHorizontalAlignment(SwingConstants.CENTER);
+        jScore.add(nowScore, BorderLayout.SOUTH);
 
-        c.gridx = 1;
-        c.gridy = 0;
-        contentInfo.add(jScore,c);
 
+        nombre.add(jScore);
 
 
 
@@ -79,23 +84,24 @@ public class Swing2048 extends JFrame implements Observer {
         //Affichage du score
         JPanel jRecord = new JPanel();
         jRecord.setLayout(new BorderLayout());
-        jRecord.setPreferredSize(new Dimension(70, 50));
+        jRecord.setPreferredSize(new Dimension(90, 40));
         jRecord.setBackground(Color.gray);
-        c.gridx = 2;
-        c.gridy = 0;
-        contentInfo.add(jRecord,c);
 
-        JButton bReffresh = new JButton("Reffresh");
-        //contentInfo.add(bReffresh);
+        JLabel titleRecord = new JLabel("Record");
+        titleRecord.setFont(new Font("Serif", Font.PLAIN, 15));
+        titleRecord.setForeground(Color.white);
+        titleRecord.setHorizontalAlignment(SwingConstants.CENTER);
+        jRecord.add(titleRecord, BorderLayout.NORTH);
 
+        JLabel nowRecord = new JLabel("3628");
+        nowRecord.setFont(new Font("Serif", Font.BOLD, 20));
+        nowRecord.setForeground(Color.white);
+        nowRecord.setHorizontalAlignment(SwingConstants.CENTER);
+        jRecord.add(nowRecord, BorderLayout.SOUTH);
 
+        nombre.add(jRecord);
 
-
-
-
-
-
-
+        contentInfo.add(nombre, BorderLayout.EAST);
 
 
         contentPane.add(contentInfo, BorderLayout.NORTH);
