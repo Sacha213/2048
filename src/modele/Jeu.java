@@ -1,9 +1,12 @@
 package modele;
 
 import java.awt.Point;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Random;
+
+import static java.lang.Integer.parseInt;
 /*
 TODO:
     *fonction end game
@@ -19,8 +22,10 @@ public class Jeu extends Observable {
     private static Random rnd = new Random(4);
     public boolean gameRunning = true;
     private HashMap<Case,Point> map;
+    public int score, highScore;
 
     public Jeu(int size) {
+        score = 0;
         tabCases = new Case[size][size];
         map = new HashMap<Case,Point>();
 
@@ -144,18 +149,7 @@ public class Jeu extends Observable {
             notifyObservers();
 
             //on regarde si la partie est finie
-            if(isGameOver()){
-                System.out.println("Partie fini !");
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                System.out.println("Partie fini !");
-                gameRunning = false;
-                setChanged();
-                notifyObservers();
-            }
+            if(isGameOver()) endGame();
 
 
         }).start();
@@ -189,6 +183,32 @@ public class Jeu extends Observable {
 
     }
 
+    public void endGame() {
+        System.out.println("Partie fini !");
+        if(score > highScore) {
+            highScore = score;
+            File file = new File("./resources/score.txt");
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                writer.write(String.valueOf(score));
+                writer.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
+        }
+        /*
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }*/
+        gameRunning = false;
+        setChanged();
+        notifyObservers();
+    }
+
     /**
      * Tire une nouvelle case dans la grille de jeu
      * La position de la nouvelle case est aléatoire parmi celles libres
@@ -216,6 +236,17 @@ public class Jeu extends Observable {
         // permet de libérer le processus graphique ou de la console
         new Thread(() -> {
             int r;
+            score = 0;
+
+            File file = new File("./resources/score.txt");
+            BufferedReader br = null;
+            try {
+                br = new BufferedReader(new FileReader(file));
+                highScore = parseInt(br.readLine());
+            } catch (IOException e) {
+                System.out.println("Erreur lors de la lecture du record : " + e);
+            }
+
 
             for (int i = 0; i < tabCases.length; i++) {
                 for (int j = 0; j < tabCases.length; j++) {

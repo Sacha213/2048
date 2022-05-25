@@ -21,8 +21,11 @@ public class Swing2048 extends JFrame implements Observer {
     // tableau de cases : i, j -> case graphique
     private JLabel[][] tabC;
     private Jeu jeu;
+    private JLabel nowScore;
+    private JLabel nowRecord;
 
     private HashMap<Integer, Color> colorMap;
+    private KeyAdapter keyAdapter;
 
     /**
      * Constructeur de la classe
@@ -68,7 +71,7 @@ public class Swing2048 extends JFrame implements Observer {
         titleScore.setHorizontalAlignment(SwingConstants.CENTER);
         jScore.add(titleScore, BorderLayout.NORTH);
 
-        JLabel nowScore = new JLabel("2048");
+        nowScore = new JLabel("0");
         nowScore.setFont(new Font("Serif", Font.BOLD, 20));
         nowScore.setForeground(Color.white);
         nowScore.setHorizontalAlignment(SwingConstants.CENTER);
@@ -93,7 +96,8 @@ public class Swing2048 extends JFrame implements Observer {
         titleRecord.setHorizontalAlignment(SwingConstants.CENTER);
         jRecord.add(titleRecord, BorderLayout.NORTH);
 
-        JLabel nowRecord = new JLabel("3628");
+        //Modifier ici
+        nowRecord = new JLabel(String.valueOf(jeu.highScore));
         nowRecord.setFont(new Font("Serif", Font.BOLD, 20));
         nowRecord.setForeground(Color.white);
         nowRecord.setHorizontalAlignment(SwingConstants.CENTER);
@@ -177,15 +181,23 @@ public class Swing2048 extends JFrame implements Observer {
 
                     }
                 }
+                //On met à jour le score
+
+                nowScore.setText(String.valueOf(jeu.score));
+
             });
         }
         //si la partie est finie
         else {
+            supprimerEcouteurClavier();
             gameOver();
         }
     }
 
     private void gameOver(){
+        SwingUtilities.invokeLater(() -> {
+        nowRecord.setText(String.valueOf(jeu.highScore));});
+
         JDialog jd = new JDialog(this,"Game Over");
 
         jd.setLayout(new FlowLayout());
@@ -200,6 +212,7 @@ public class Swing2048 extends JFrame implements Observer {
         rejouer.addActionListener(e -> {
             jd.setVisible(false);
             jeu.rnd();
+            ajouterEcouteurClavier();
             System.out.println("Rejouer button pressed.");
         });
 
@@ -222,7 +235,7 @@ public class Swing2048 extends JFrame implements Observer {
      * Correspond à la fonctionnalité de Contrôleur : écoute les évènements, et déclenche des traitements sur le modèle
      */
     private void ajouterEcouteurClavier() {
-        addKeyListener(new KeyAdapter() { // new KeyAdapter() { ... } est une instance de classe anonyme, il s'agit d'un objet qui correspond au controleur dans MVC
+        keyAdapter = new KeyAdapter() { // new KeyAdapter() { ... } est une instance de classe anonyme, il s'agit d'un objet qui correspond au controleur dans MVC
             @Override
             public void keyPressed(KeyEvent e) {
                 switch(e.getKeyCode()) {  // on regarde quelle touche a été pressée
@@ -233,8 +246,14 @@ public class Swing2048 extends JFrame implements Observer {
                     case KeyEvent.VK_ENTER : jeu.rnd(); break;
                 }
             }
-        });
+        };
+        addKeyListener(keyAdapter);
     }
+
+    private void supprimerEcouteurClavier() {
+        removeKeyListener(keyAdapter);
+    }
+
 
 
     @Override

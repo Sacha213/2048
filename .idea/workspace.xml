@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fdee2054-3505-429b-adfd-0cca4a1c8596" name="Changes" comment="Affichage + pop up (part 1)">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/2048/modele/Case.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/modele/Case.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/2048/modele/Jeu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/modele/Jeu$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/2048/modele/Jeu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/modele/Jeu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modele/Case.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modele/Case.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modele/Jeu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modele/Jeu.java" afterDir="false" />
+    </list>
+    <list id="d901ae22-d751-4f6c-8fd5-1f950071a4fa" name="Changes by sachamontel" comment="Affichage + pop up (part 1)">
+      <change beforePath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="29eFpXkoZuJen9sC9OoWXZ2ZA6U" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "last_opened_file_path": "C:/Users/lilia/Mon Drive/Cours/Semestre 6/2048",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lilia\Mon Drive\Cours\Semestre 6\2048\resources" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="2048" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fdee2054-3505-429b-adfd-0cca4a1c8596" name="Changes" comment="" />
+      <created>1653465833517</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1653465833517</updated>
+      <workItem from="1653465837381" duration="8494000" />
+      <workItem from="1653480545039" duration="108000" />
+      <workItem from="1653486581500" duration="3505000" />
+    </task>
+    <task id="LOCAL-00001" summary="Affichage + pop up (part 1)">
+      <created>1653471383349</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1653471383349</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Affichage + pop up (part 1)">
+      <created>1653471554954</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1653471554954</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Affichage + pop up (part 1)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Affichage + pop up (part 1)" />
+  </component>
+</project>

@@ -52,6 +52,7 @@ public class Case {
             //Fusion
             if (caseAdj.valeur == this.valeur) {
               caseAdj.valeur=this.valeur*2;
+              jeu.score += caseAdj.valeur;
               //Suppression de la case
               jeu.delete(this);
               ret = true;
