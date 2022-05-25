@@ -152,25 +152,23 @@ public class Swing2048 extends JFrame implements Observer {
     private void rafraichir()  {
         //si la partie n'est pas finie
         if (jeu.gameRunning) {
-            SwingUtilities.invokeLater(new Runnable() { // demande au processus graphique de réaliser le traitement
-                @Override
-                public void run() {
-                    for (int i = 0; i < jeu.getSize(); i++) {
-                        for (int j = 0; j < jeu.getSize(); j++) {
-                            Case c = jeu.getCase(i, j);
-                            int val = c.getValeur();
+            // demande au processus graphique de réaliser le traitement
+            SwingUtilities.invokeLater(() -> {
+                for (int i = 0; i < jeu.getSize(); i++) {
+                    for (int j = 0; j < jeu.getSize(); j++) {
+                        Case c = jeu.getCase(i, j);
+                        int val = c.getValeur();
 
-                            if (val == 0) {
+                        if (val == 0) {
 
-                                tabC[i][j].setText("");
+                            tabC[i][j].setText("");
 
-                            } else {
-                                tabC[i][j].setText(val + "");
-                            }
-                            tabC[i][j].setBackground(colorMap.get(val));
-
-
+                        } else {
+                            tabC[i][j].setText(val + "");
                         }
+                        tabC[i][j].setBackground(colorMap.get(val));
+
+
                     }
                 }
             });
@@ -182,39 +180,35 @@ public class Swing2048 extends JFrame implements Observer {
     }
 
     private void gameOver(){
-        System.out.println("game over");
-
-        JDialog jd = new JDialog(this);
+        JDialog jd = new JDialog(this,"Game Over");
 
         jd.setLayout(new FlowLayout());
 
-        jd.setBounds(500, 300, 400, 300);
-
-        JLabel gameOver = new JLabel("Game Over");
+        //jd.setBounds(75, 150, 200, 150);
+        JLabel gameOver = new JLabel("Game Over !\n", SwingConstants.CENTER);
+        gameOver.setFont(gameOver.getFont().deriveFont(Font.BOLD, 16f));
         JLabel message = new JLabel("Voulez vous rejouer?");
 
         JButton rejouer = new JButton("Rejouer");
         JButton quitter = new JButton("Quitter");
-        rejouer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jd.setVisible(false);
-                System.out.println("Rejouer button pressed.");
-            }
+        rejouer.addActionListener(e -> {
+            jd.setVisible(false);
+            jeu.rnd();
+            System.out.println("Rejouer button pressed.");
         });
 
-        quitter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jd.setVisible(false);
-                System.out.println("Quitter button pressed.");
-            }
+        quitter.addActionListener(e -> {
+            jd.setVisible(false);
+            System.exit(0);
+            System.out.println("Quitter button pressed.");
         });
 
         jd.add(gameOver);
         jd.add(message);
         jd.add(rejouer);
         jd.add(quitter);
+        jd.setSize(200,150);
+        jd.setLocationRelativeTo(this);
         jd.setVisible(true);
     }
 

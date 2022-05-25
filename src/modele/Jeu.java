@@ -111,55 +111,54 @@ public class Jeu extends Observable {
      * @param d Direction dans laquelle déplacer toutes les cases
      */
     public void update(Direction d){
-        new Thread() { // permet de libérer le processus graphique ou de la console
-            public void run() {
-                //parcours du tableau
-                boolean moved = false;
+        // permet de libérer le processus graphique ou de la console
+        new Thread(() -> {
+            //parcours du tableau
+            boolean moved = false;
 
-                switch (d) {
-                    case gauche, haut:
-                        for (int x = 0; x < tabCases.length; x++) {
-                            for (int y = 0; y < tabCases.length; y++) {
-                                //on regarde s'il y a eu un mouvement
-                                if (tabCases[x][y].move(d)) moved = true;
-                            }
+            switch (d) {
+                case gauche, haut:
+                    for (int x = 0; x < tabCases.length; x++) {
+                        for (int y = 0; y < tabCases.length; y++) {
+                            //on regarde s'il y a eu un mouvement
+                            if (tabCases[x][y].move(d)) moved = true;
                         }
-                        break;
-                    case droite, bas:
-                        for (int x = tabCases.length - 1; x >= 0; x--) {
-                            for (int y = tabCases.length -1; y >= 0; y--) {
-                                //on regarde s'il y a eu un mouvement
-                                if (tabCases[x][y].move(d)) moved = true;
-                            }
+                    }
+                    break;
+                case droite, bas:
+                    for (int x = tabCases.length - 1; x >= 0; x--) {
+                        for (int y = tabCases.length -1; y >= 0; y--) {
+                            //on regarde s'il y a eu un mouvement
+                            if (tabCases[x][y].move(d)) moved = true;
                         }
-                        break;
-                    default:
-                        System.out.println("default");
-                        break;
+                    }
+                    break;
+                default:
+                    System.out.println("default");
+                    break;
+            }
+            if (moved) {
+                drawCase();
+            }
+            setChanged();
+            notifyObservers();
+
+            //on regarde si la partie est finie
+            if(isGameOver()){
+                System.out.println("Partie fini !");
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
-                if (moved) {
-                    drawCase();
-                }
+                System.out.println("Partie fini !");
+                gameRunning = false;
                 setChanged();
                 notifyObservers();
-
-                //on regarde si la partie est finie
-                if(isGameOver()){
-                    System.out.println("Partie fini !");
-                    try {
-                        sleep(200);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.println("Partie fini !");
-                    gameRunning = false;
-                    setChanged();
-                    notifyObservers();
-                }
-
-
             }
-        }.start();
+
+
+        }).start();
 
 
 
@@ -170,9 +169,7 @@ public class Jeu extends Observable {
      * @return true si la partie est finie, faux sinon
      */
     private boolean isGameOver(){
-        return true;
-        /*
-        boolean gameOver=false;
+        boolean gameOver=true;
 
         for (int x = 0; x < tabCases.length; x++) {
             for (int y = 0; y < tabCases.length; y++) {
@@ -189,7 +186,7 @@ public class Jeu extends Observable {
         }
 
         return gameOver;
-        */
+
     }
 
     /**
@@ -216,34 +213,33 @@ public class Jeu extends Observable {
      * Tire une nouvelle grille aléatoirement, le nombre de cases remplies est aléatoire
      */
     public void rnd() {
-        new Thread() { // permet de libérer le processus graphique ou de la console
-            public void run() {
-                int r;
+        // permet de libérer le processus graphique ou de la console
+        new Thread(() -> {
+            int r;
 
-                for (int i = 0; i < tabCases.length; i++) {
-                    for (int j = 0; j < tabCases.length; j++) {
-                        r = rnd.nextInt(3);
+            for (int i = 0; i < tabCases.length; i++) {
+                for (int j = 0; j < tabCases.length; j++) {
+                    r = rnd.nextInt(3);
 
-                        switch (r) {
-                            case 0:
-                                tabCases[i][j] = new Case(0, Jeu.this);
-                                break;
-                            case 1:
-                                tabCases[i][j] = new Case(2, Jeu.this);
-                                break;
-                            case 2:
-                                tabCases[i][j] = new Case(4,Jeu.this);
-                                break;
-                        }
-                        Point p = new Point(i,j);
-                        map.put(tabCases[i][j], p);
+                    switch (r) {
+                        case 0:
+                            tabCases[i][j] = new Case(0, Jeu.this);
+                            break;
+                        case 1:
+                            tabCases[i][j] = new Case(2, Jeu.this);
+                            break;
+                        case 2:
+                            tabCases[i][j] = new Case(4,Jeu.this);
+                            break;
                     }
+                    Point p = new Point(i,j);
+                    map.put(tabCases[i][j], p);
                 }
-                setChanged();
-                notifyObservers();
             }
-
-        }.start();
+            gameRunning = true;
+            setChanged();
+            notifyObservers();
+        }).start();
     }
 
 }
