@@ -6,6 +6,7 @@ import modele.Jeu;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
@@ -31,14 +32,71 @@ public class Swing2048 extends JFrame implements Observer {
         jeu = _jeu;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(jeu.getSize() * PIXEL_PER_SQUARE, (jeu.getSize() +1) * (PIXEL_PER_SQUARE));
+
+        //JPanel principale
         JPanel contentPane = new JPanel(new BorderLayout());
+
+        //JPanel pour les information
         JPanel contentInfo = new JPanel();
         contentInfo.setPreferredSize(new Dimension(jeu.getSize() * PIXEL_PER_SQUARE, PIXEL_PER_SQUARE));
-        contentInfo.setLayout(new BoxLayout(contentInfo,BoxLayout.X_AXIS));
-        contentInfo.setBackground(Color.blue);
+        contentInfo.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+
+
+
+        //Affichage du titre
         JLabel title = new JLabel("2048");
         title.setFont(new Font("Serif", Font.PLAIN, 40));
-        contentInfo.add(title);
+        c.gridx = 0;
+        c.gridy = 0;
+        contentInfo.add(title,c);
+
+        //JPanel space = new JPanel();
+        //space.setSize(200,0);
+        //contentInfo.add(space);
+
+        //Affichage du score
+        JPanel jScore = new JPanel();
+        jScore.setLayout(new BorderLayout());
+        jScore.setPreferredSize(new Dimension(70, 50));
+        jScore.setBackground(Color.gray);
+
+
+
+        //JLabel titleScore = new JLabel("Score");
+        //titleScore.setFont(new Font("Serif", Font.PLAIN, 10));
+        //jScore.add(titleScore);
+
+        c.gridx = 1;
+        c.gridy = 0;
+        contentInfo.add(jScore,c);
+
+
+
+
+
+
+        //Affichage du score
+        JPanel jRecord = new JPanel();
+        jRecord.setLayout(new BorderLayout());
+        jRecord.setPreferredSize(new Dimension(70, 50));
+        jRecord.setBackground(Color.gray);
+        c.gridx = 2;
+        c.gridy = 0;
+        contentInfo.add(jRecord,c);
+
+        JButton bReffresh = new JButton("Reffresh");
+        //contentInfo.add(bReffresh);
+
+
+
+
+
+
+
+
+
+
 
         contentPane.add(contentInfo, BorderLayout.NORTH);
 
