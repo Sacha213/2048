@@ -2,6 +2,7 @@ package modele;
 
 import java.awt.Point;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Random;
@@ -22,7 +23,9 @@ public class Jeu extends Observable {
     private static Random rnd = new Random(4);
     public boolean gameRunning = true;
     private HashMap<Case,Point> map;
-    public int score, highScore;
+    public int score, highScore, nombreDeblocage;
+    
+    public ArrayList<HashMap<Case,Point>> sauvergarde;
 
     public Jeu(int size) {
         score = 0;
@@ -116,6 +119,9 @@ public class Jeu extends Observable {
      * @param d Direction dans laquelle déplacer toutes les cases
      */
     public void update(Direction d){
+        //On sauvegarde le jeu actuelle
+        sauvergarde.add(map);
+        
         // permet de libérer le processus graphique ou de la console
         new Thread(() -> {
             //parcours du tableau
@@ -156,6 +162,42 @@ public class Jeu extends Observable {
 
 
 
+    }
+
+    /**
+     * Fonction qui permet de revenir en arrière dans le jeu
+     * @param indice nombre de coups à enlever
+     */
+    public void goBack(int indice){
+        //On actualise la map
+        for (int i=0; i<indice; i++){
+            sauvergarde.remove(sauvergarde.size()-i-1);
+        }
+        map = sauvergarde.get(sauvergarde.size()-1);
+
+        //On actualise le tableau
+        for (Case c: map.keySet()) {
+            Point p = map.get(c);
+
+            tabCases[p.x][p.y]=c;
+        }
+
+
+    }
+
+    /**
+     * Fonction qui permet de débloquer l'utilisateur s'il a perdu la partie
+     * Cette fonction supprime les cases qui ont pour valeur 2 ou 4.
+     */
+    public void deblocage(){
+        //On parcours le tableau
+        for (int x = 0; x < tabCases.length; x++) {
+            for (int y = 0; y < tabCases.length; y++) {
+                Case c = tabCases[x][y];
+                if (c.getValeur()==2 || c.getValeur() == 4 ) delete(c);
+            }
+        }
+        nombreDeblocage--;
     }
 
     /**
@@ -237,6 +279,7 @@ public class Jeu extends Observable {
         new Thread(() -> {
             int r;
             score = 0;
+            nombreDeblocage =3;
 
             File file = new File("./resources/score.txt");
             BufferedReader br = null;

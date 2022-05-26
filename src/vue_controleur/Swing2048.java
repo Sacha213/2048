@@ -27,6 +27,7 @@ public class Swing2048 extends JFrame implements Observer {
     private HashMap<Integer, Color> colorMap;
     private KeyAdapter keyAdapter;
 
+
     /**
      * Constructeur de la classe
      * @param _jeu Référence sur la grille du jeu
@@ -189,7 +190,7 @@ public class Swing2048 extends JFrame implements Observer {
         }
         //si la partie est finie
         else {
-            supprimerEcouteurClavier();
+            //supprimerEcouteurClavier();
             gameOver();
         }
     }
@@ -209,10 +210,11 @@ public class Swing2048 extends JFrame implements Observer {
 
         JButton rejouer = new JButton("Rejouer");
         JButton quitter = new JButton("Quitter");
+        JButton debloquer = new JButton("Débloquer");
         rejouer.addActionListener(e -> {
             jd.setVisible(false);
             jeu.rnd();
-            ajouterEcouteurClavier();
+            //ajouterEcouteurClavier();
             System.out.println("Rejouer button pressed.");
         });
 
@@ -222,10 +224,20 @@ public class Swing2048 extends JFrame implements Observer {
             System.out.println("Quitter button pressed.");
         });
 
+        debloquer.addActionListener(e -> {
+            jd.setVisible(false);
+            jeu.deblocage();
+            jeu.gameRunning=true;
+            rafraichir();
+            System.out.println("Débloquer button pressed.");
+        });
+
         jd.add(gameOver);
         jd.add(message);
         jd.add(rejouer);
         jd.add(quitter);
+        if(jeu.nombreDeblocage>0)
+        jd.add(debloquer);
         jd.setSize(200,150);
         jd.setLocationRelativeTo(this);
         jd.setVisible(true);

@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fdee2054-3505-429b-adfd-0cca4a1c8596" name="Changes" comment="Affichage + pop up (part 1)">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2048/modele/Case.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/modele/Case.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2048/modele/Jeu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/modele/Jeu$1.class" afterDir="false" />
+    <list default="true" id="fdee2054-3505-429b-adfd-0cca4a1c8596" name="Changes" comment="Début de l'implémentation du déplacement à gauche">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/2048/modele/Jeu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/modele/Jeu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$4.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modele/Case.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modele/Case.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/score.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modele/Jeu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modele/Jeu.java" afterDir="false" />
-    </list>
-    <list id="d901ae22-d751-4f6c-8fd5-1f950071a4fa" name="Changes by sachamontel" comment="Affichage + pop up (part 1)">
       <change beforePath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" afterDir="false" />
     </list>
+    <list id="d901ae22-d751-4f6c-8fd5-1f950071a4fa" name="Changes by sachamontel" comment="Affichage + pop up (part 1)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,16 +29,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "last_opened_file_path": "C:/Users/lilia/Mon Drive/Cours/Semestre 6/2048",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/lilia/Mon Drive/Cours/Semestre 6/2048&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\lilia\Mon Drive\Cours\Semestre 6\2048\resources" />
