@@ -275,6 +275,7 @@ public class Jeu extends Observable {
      * Tire une nouvelle grille aléatoirement, le nombre de cases remplies est aléatoire
      */
     public void rnd() {
+        sauvergarde = new ArrayList<>();
         // permet de libérer le processus graphique ou de la console
         new Thread(() -> {
             int r;

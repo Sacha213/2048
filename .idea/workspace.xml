@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fdee2054-3505-429b-adfd-0cca4a1c8596" name="Changes" comment="Début de l'implémentation du déplacement à gauche">
+    <list default="true" id="fdee2054-3505-429b-adfd-0cca4a1c8596" name="Changes" comment="Affichage + pop up (part 1)">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/2048/modele/Jeu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/modele/Jeu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$4.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/score.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modele/Jeu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modele/Jeu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" afterDir="false" />
     </list>
@@ -69,6 +67,7 @@
       <workItem from="1653465837381" duration="8494000" />
       <workItem from="1653480545039" duration="108000" />
       <workItem from="1653486581500" duration="3505000" />
+      <workItem from="1653657753886" duration="3378000" />
     </task>
     <task id="LOCAL-00001" summary="Affichage + pop up (part 1)">
       <created>1653471383349</created>

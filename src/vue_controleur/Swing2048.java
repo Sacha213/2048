@@ -37,6 +37,44 @@ public class Swing2048 extends JFrame implements Observer {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(jeu.getSize() * PIXEL_PER_SQUARE, (jeu.getSize() +1) * (PIXEL_PER_SQUARE));
 
+        JPanel contentPane = new JPanel();
+        contentPane.setLayout(new GridLayout(4, 0));
+
+        contentPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+
+        JPanel pTitle = new JPanel();
+        JLabel title = new JLabel("Menu", SwingConstants.CENTER);
+        title.setForeground(Color.darkGray);
+        title.setFont(new Font("Serif", Font.BOLD, 40));
+        pTitle.add(title);
+
+        JButton buttonPlayEasy = new JButton("Facile");
+
+        JButton buttonPlayMedium = new JButton("Moyen");
+        JButton buttonMulti = new JButton("Multijoueur");
+
+
+        buttonPlayEasy.addActionListener(e ->{
+                //On redonne le focus pour avoir les keyevents
+                requestFocus();
+                affichageJeu();
+                ajouterEcouteurClavier();
+        });
+
+        contentPane.add(title);
+        contentPane.add(buttonPlayEasy);
+        contentPane.add(buttonPlayMedium);
+        contentPane.add(buttonMulti);
+
+        setContentPane(contentPane);
+
+    }
+
+    /**
+     * Méthode permettant d'afficher le 2048
+     */
+    public void affichageJeu(){
         //JPanel principale
         JPanel contentPane = new JPanel(new BorderLayout());
         contentPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -78,11 +116,7 @@ public class Swing2048 extends JFrame implements Observer {
         nowScore.setHorizontalAlignment(SwingConstants.CENTER);
         jScore.add(nowScore, BorderLayout.SOUTH);
 
-
         nombre.add(jScore);
-
-
-
 
 
         //Affichage du score
@@ -149,9 +183,7 @@ public class Swing2048 extends JFrame implements Observer {
         }
         contentPane.add(contentGame, BorderLayout.CENTER);
         setContentPane(contentPane);
-        ajouterEcouteurClavier();
         rafraichir();
-
     }
 
 
