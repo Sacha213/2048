@@ -6,6 +6,7 @@ package modele;
 public class Case {
     private int valeur;
     private Jeu jeu;
+    public boolean aFusionne;
 
     /**
      * Constructeur de la classe
@@ -15,6 +16,7 @@ public class Case {
     public Case(int _valeur, Jeu _jeu) {
         valeur = _valeur;
         jeu = _jeu;
+        aFusionne = false;
     }
 
     /**
@@ -50,6 +52,7 @@ public class Case {
             }
 
             //Fusion
+            if (caseAdj.aFusionne) break;
             if (caseAdj.valeur == this.valeur) {
               caseAdj.valeur=this.valeur*2;
               jeu.score += caseAdj.valeur;

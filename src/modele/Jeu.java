@@ -151,6 +151,13 @@ public class Jeu extends Observable {
             if (moved) {
                 drawCase();
             }
+            //On réinitialise la variable de fusion
+            for (int x = 0; x < tabCases.length; x++) {
+                for (int y = 0; y < tabCases.length; y++) {
+                    tabCases[x][y].aFusionne = false;
+                }
+            }
+
             setChanged();
             notifyObservers();
 
@@ -226,10 +233,10 @@ public class Jeu extends Observable {
     }
 
     public void endGame() {
-        System.out.println("Partie fini !");
+        System.out.println("Partie finie !");
         if(score > highScore) {
             highScore = score;
-            File file = new File("./resources/score.txt");
+            File file = new File("./src/resources/score.txt");
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                 writer.write(String.valueOf(score));
@@ -281,8 +288,7 @@ public class Jeu extends Observable {
             int r;
             score = 0;
             nombreDeblocage =3;
-
-            File file = new File("./resources/score.txt");
+            File file = new File("./src/resources/score.txt");
             BufferedReader br = null;
             try {
                 br = new BufferedReader(new FileReader(file));
