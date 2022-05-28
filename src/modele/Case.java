@@ -52,14 +52,14 @@ public class Case {
             }
 
             //Fusion
-            if (caseAdj.aFusionne) break;
+            //if (caseAdj.aFusionne) break;
             if (caseAdj.valeur == this.valeur) {
-              caseAdj.valeur=this.valeur*2;
-              jeu.score += caseAdj.valeur;
-              //Suppression de la case
-              jeu.delete(this);
-              ret = true;
-              break;
+                caseAdj.valeur=this.valeur*2;
+                jeu.score += caseAdj.valeur;
+                //Suppression de la case
+                jeu.delete(this);
+                ret = true;
+                break;
             }
 
         }while (caseAdj.valeur == 0);

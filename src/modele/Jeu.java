@@ -8,11 +8,6 @@ import java.util.Observable;
 import java.util.Random;
 
 import static java.lang.Integer.parseInt;
-/*
-TODO:
-    *fonction end game
-    *plusieurs fusions ?
-*/
 
 /**
  * Classe qui gère la grille de jeu
@@ -20,12 +15,12 @@ TODO:
 public class Jeu extends Observable {
 
     private Case[][] tabCases;
-    private static Random rnd = new Random(4);
+    private static Random rnd = new Random();
     public boolean gameRunning = true;
     private HashMap<Case,Point> map;
     public int score, highScore, nombreDeblocage;
-    
-    public ArrayList<HashMap<Case,Point>> sauvergarde;
+
+    public ArrayList<HashMap<Case,Point>> sauvegarde;
 
     public Jeu(int size) {
         score = 0;
@@ -120,7 +115,7 @@ public class Jeu extends Observable {
      */
     public void update(Direction d){
         //On sauvegarde le jeu actuelle
-        sauvergarde.add(map);
+        //sauvegarde.add(map);
         
         // permet de libérer le processus graphique ou de la console
         new Thread(() -> {
@@ -164,7 +159,6 @@ public class Jeu extends Observable {
             //on regarde si la partie est finie
             if(isGameOver()) endGame();
 
-
         }).start();
 
 
@@ -178,9 +172,9 @@ public class Jeu extends Observable {
     public void goBack(int indice){
         //On actualise la map
         for (int i=0; i<indice; i++){
-            sauvergarde.remove(sauvergarde.size()-i-1);
+            sauvegarde.remove(sauvegarde.size()-i-1);
         }
-        map = sauvergarde.get(sauvergarde.size()-1);
+        map = sauvegarde.get(sauvegarde.size()-1);
 
         //On actualise le tableau
         for (Case c: map.keySet()) {
@@ -282,7 +276,7 @@ public class Jeu extends Observable {
      * Tire une nouvelle grille aléatoirement, le nombre de cases remplies est aléatoire
      */
     public void rnd() {
-        sauvergarde = new ArrayList<>();
+        sauvegarde = new ArrayList<>();
         // permet de libérer le processus graphique ou de la console
         new Thread(() -> {
             int r;
@@ -321,6 +315,20 @@ public class Jeu extends Observable {
             setChanged();
             notifyObservers();
         }).start();
+    }
+
+    /**
+     * Fonction de debug qui affiche la grille de jeu dans la console
+     */
+    public void afficherTableau() {
+        System.out.println("\n");
+        for (int x = 0; x < tabCases.length; x++) {
+            System.out.print("|");
+            for (int y = 0; y < tabCases.length; y++) {
+                System.out.print(" " + tabCases[x][y].getValeur() + " |");
+            }
+            System.out.println("");
+        }
     }
 
 }
