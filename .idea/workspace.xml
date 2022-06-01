@@ -2,23 +2,68 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdee2054-3505-429b-adfd-0cca4a1c8596" name="Changes" comment="Affichage + pop up (part 1)">
+      <change afterPath="$PROJECT_DIR$/src/vue_controleur/Joueur.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2048/modele/Case.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/modele/Case.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2048/modele/Jeu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/modele/Jeu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/2048/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2048/vue_controleur/Swing2048.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modele/Case.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modele/Case.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modele/Jeu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modele/Jeu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" afterDir="false" />
     </list>
-    <list id="d901ae22-d751-4f6c-8fd5-1f950071a4fa" name="Changes by sachamontel" comment="Affichage + pop up (part 1)" />
+    <list id="d901ae22-d751-4f6c-8fd5-1f950071a4fa" name="Changes by sachamontel" comment="Affichage + pop up (part 1)">
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/vue_controleur/Swing2048.java">
+      <ranges>
+        <range start1="14" end1="17" start2="14" end2="15" changelist="d901ae22-d751-4f6c-8fd5-1f950071a4fa" />
+        <range start1="23" end1="28" start2="21" end2="23" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="29" end1="31" start2="24" end2="24" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="35" end1="36" start2="28" end2="28" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="37" end1="39" start2="29" end2="30" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="41" end1="42" start2="32" end2="33" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="43" end1="44" start2="34" end2="36" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="45" end1="45" start2="37" end2="38" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="47" end1="48" start2="40" end2="41" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="51" end1="52" start2="44" end2="44" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="94" end1="94" start2="86" end2="87" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="96" end1="97" start2="89" end2="89" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="98" end1="98" start2="90" end2="91" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="101" end1="101" start2="94" end2="95" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="103" end1="104" start2="97" end2="97" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="106" end1="107" start2="99" end2="99" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="116" end1="117" start2="108" end2="109" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="119" end1="119" start2="111" end2="112" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="207" end1="207" start2="200" end2="202" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="208" end1="210" start2="203" end2="208" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="217" end1="220" start2="215" end2="217" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="222" end1="236" start2="219" end2="227" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="237" end1="313" start2="228" end2="232" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="314" end1="353" start2="233" end2="233" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="354" end1="354" start2="234" end2="264" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="358" end1="359" start2="268" end2="270" changelist="d901ae22-d751-4f6c-8fd5-1f950071a4fa" />
+        <range start1="403" end1="403" start2="314" end2="315" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="404" end1="422" start2="316" end2="317" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="423" end1="426" start2="318" end2="318" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="431" end1="432" start2="323" end2="326" changelist="fdee2054-3505-429b-adfd-0cca4a1c8596" />
+        <range start1="433" end1="433" start2="327" end2="354" changelist="d901ae22-d751-4f6c-8fd5-1f950071a4fa" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -44,7 +89,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application" singleton="true" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="2048" />
       <method v="2">

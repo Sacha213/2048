@@ -12,44 +12,36 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * Classe gérant la version graphique du jeu 2048
  */
 public class Swing2048 extends JFrame implements Observer {
     private static final int PIXEL_PER_SQUARE = 90;
-    // tableau de cases : i, j -> case graphique
-    private JLabel[][] tabC;
-    private Jeu jeu;
-    private JLabel nowScore;
-    private JLabel nowRecord;
+    private ArrayList<Joueur> joueurs;
+    public HashMap<Integer, Color> colorMap;
 
-    private HashMap<Integer, Color> colorMap;
-    private KeyAdapter keyAdapter;
 
 
     /**
      * Constructeur de la classe
-     * @param _jeu Référence sur la grille du jeu
      */
-    public Swing2048(Jeu _jeu) {
-        jeu = _jeu;
+    public Swing2048 () {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        setSize(jeu.getSize() * PIXEL_PER_SQUARE, (jeu.getSize() +1) * (PIXEL_PER_SQUARE));
+        setSize(4 * PIXEL_PER_SQUARE, (5) * (PIXEL_PER_SQUARE));
 
-        remplirColorMap ();
+        joueurs = new ArrayList<Joueur>();
+        remplirColorMap();
         afficherMenu();
+
         //Affiche l'icône personnalisée
         try {
-            setIconImage(ImageIO.read(getClass().getResource("../resources/icon.png")));
+            setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("../resources/icon.png"))));
         } catch (IOException e) {
             System.out.println("Impossible de charger l'icône " + e);
         }
-
     }
 
     /**
@@ -92,19 +84,19 @@ public class Swing2048 extends JFrame implements Observer {
 
 
         buttonPlayEasy.addActionListener(e ->{
+            creerJeuEasy();
             //On redonne le focus pour avoir les keyevents
             requestFocus();
-            afficherJeuEasy();
             ajouterEcouteurClavier();
+
         });
 
         buttonPlayMulti.addActionListener(e ->{
+            creerJeuMulti();
             //On redonne le focus pour avoir les keyevents
             requestFocus();
-            afficherJeuMulti();
             ajouterEcouteurClavier();
         });
-
 
         contentPane.add(title);
         contentPane.add(buttonPlayEasy);
@@ -114,9 +106,10 @@ public class Swing2048 extends JFrame implements Observer {
         setContentPane(contentPane);
     }
 
-    /**
+     /**
      * Méthode permettant d'afficher le 2048
      */
+     /*
     public void afficherJeuEasy(){
         //JPanel principale
         JPanel contentPane = new JPanel(new BorderLayout());
@@ -205,9 +198,14 @@ public class Swing2048 extends JFrame implements Observer {
         setContentPane(contentPane);
         rafraichir();
     }
+    */
 
-    public void afficherJeuMulti(){ // a modifier pour le multi
-        setSize(jeu.getSize() * PIXEL_PER_SQUARE * 2, (jeu.getSize() +1) * (PIXEL_PER_SQUARE));
+
+    public void creerJeuMulti(){
+        joueurs.add(new Joueur(4, this));
+        joueurs.add(new Joueur(4, this));
+
+        setSize(4 * PIXEL_PER_SQUARE * 2 + PIXEL_PER_SQUARE, (7) * (PIXEL_PER_SQUARE));
         setTitle("2/0/4/8");
 
         //JPanel principale
@@ -215,148 +213,61 @@ public class Swing2048 extends JFrame implements Observer {
         contentPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         //JPanel pour les informations
-        JPanel contentInfo = new JPanel();
-        contentInfo.setPreferredSize(new Dimension(jeu.getSize() * PIXEL_PER_SQUARE * 2, PIXEL_PER_SQUARE));
-        contentInfo.setLayout(new GridLayout(0, 3, -1, -1));
+        JPanel infoPanel = new JPanel();
+        infoPanel.setPreferredSize(new Dimension(4 * PIXEL_PER_SQUARE * 2, PIXEL_PER_SQUARE));
 
         //Affichage du titre
-        JPanel pTitle = new JPanel();
-        JLabel lTitle = new JLabel("2048");
-        lTitle.setHorizontalAlignment(JLabel.CENTER);
-        lTitle.setForeground(Color.darkGray);
-        lTitle.setFont(new Font("Serif", Font.BOLD, 40));
-        pTitle.add(lTitle);
+        JPanel titlePanel = new JPanel();
+        JLabel titleLabel = new JLabel("2048");
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        titleLabel.setForeground(Color.darkGray);
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 40));
+        titlePanel.add(titleLabel);
+        infoPanel.add(titlePanel);
+        contentPane.add(infoPanel, BorderLayout.NORTH);
 
-        //Affichage des infos du joueur 1
-        JPanel pJoueur1 = new JPanel();
-        //Affichage du score
-        JPanel pScore1 = new JPanel();
-        pScore1.setLayout(new BorderLayout());
-        pScore1.setPreferredSize(new Dimension(90, 40));
-        pScore1.setBackground(Color.lightGray);
-
-        JLabel titleScore1 = new JLabel("Score Joueur 1");
-        titleScore1.setFont(new Font("Serif", Font.PLAIN, 15));
-        titleScore1.setForeground(Color.white);
-        titleScore1.setHorizontalAlignment(SwingConstants.CENTER);
-        pScore1.add(titleScore1, BorderLayout.NORTH);
-        nowScore = new JLabel("0");
-        nowScore.setFont(new Font("Serif", Font.BOLD, 20));
-        nowScore.setForeground(Color.white);
-        nowScore.setHorizontalAlignment(SwingConstants.CENTER);
-        pScore1.add(nowScore, BorderLayout.SOUTH);
-        pJoueur1.add(pScore1);
-
-        //Affichage des infos du joueur 1
-        JPanel pJoueur2 = new JPanel();
-        //Affichage du score
-        JPanel pScore2 = new JPanel();
-        pScore2.setLayout(new BorderLayout());
-        pScore2.setPreferredSize(new Dimension(90, 40));
-        pScore2.setBackground(Color.lightGray);
-
-
-        JLabel titleScore2 = new JLabel("Score Joueur 2");
-        titleScore2.setFont(new Font("Serif", Font.PLAIN, 15));
-        titleScore2.setForeground(Color.white);
-        titleScore2.setHorizontalAlignment(SwingConstants.CENTER);
-        pScore2.add(titleScore2, BorderLayout.NORTH);
-
-        pScore2.add(nowScore, BorderLayout.SOUTH);
-        pJoueur2.add(pScore2);
-
-        contentInfo.add(pJoueur1, BorderLayout.WEST);
-        contentInfo.add(pTitle, BorderLayout.CENTER);
-        contentInfo.add(pJoueur2, BorderLayout.CENTER);
-        contentPane.add(contentInfo, BorderLayout.NORTH);
-
-        JPanel pGames = new JPanel(new GridLayout(1, 2, 10, 0));
-        JPanel contentGame1 = new JPanel(new GridLayout(jeu.getSize(), jeu.getSize(), -3, -3));
-
-        tabC = new JLabel[jeu.getSize()][jeu.getSize()];
-
-        for (int i = 0; i < jeu.getSize(); i++) {
-            for (int j = 0; j < jeu.getSize(); j++) {
-                Border border = BorderFactory.createLineBorder(Color.darkGray, 3);
-                tabC[i][j] = new JLabel();
-                tabC[i][j].setBorder(border);
-                tabC[i][j].setHorizontalAlignment(SwingConstants.CENTER);
-                tabC[i][j].setOpaque(true);
-                tabC[i][j].setForeground(new Color(255, 255, 255));
-                tabC[i][j].setFont(new Font("", Font.PLAIN, 23));
-
-                contentGame1.add(tabC[i][j]);
-
-            }
-        }
-
-        JPanel contentGame2 = new JPanel(new GridLayout(jeu.getSize(), jeu.getSize(), -3, -3));
-
-        for (int i = 0; i < jeu.getSize(); i++) {
-            for (int j = 0; j < jeu.getSize(); j++) {
-                Border border = BorderFactory.createLineBorder(Color.darkGray, 3);
-                tabC[i][j] = new JLabel();
-                tabC[i][j].setBorder(border);
-                tabC[i][j].setHorizontalAlignment(SwingConstants.CENTER);
-                tabC[i][j].setOpaque(true);
-                tabC[i][j].setForeground(new Color(255, 255, 255));
-                tabC[i][j].setFont(new Font("", Font.PLAIN, 23));
-
-                contentGame2.add(tabC[i][j]);
-
-            }
-        }
-
-
-        pGames.add(contentGame1);
-        pGames.add(contentGame2);
-        contentPane.add(pGames, BorderLayout.CENTER);
+        //affichage du joueur 1
+        contentPane.add(joueurs.get(0).afficherJoueur(),BorderLayout.WEST);
+        //affichage du joueur 2
+        contentPane.add(joueurs.get(1).afficherJoueur(), BorderLayout.EAST);
         setContentPane(contentPane);
-        rafraichir();
     }
 
+    public void creerJeuEasy(){
+        joueurs.add(new Joueur(4, this));
 
-    /**
-     * Correspond à la fonctionnalité de Vue : affiche les données du modèle
-     */
-    private void rafraichir()  {
-        //si la partie n'est pas finie
-        if (jeu.gameRunning) {
-            // demande au processus graphique de réaliser le traitement
-            SwingUtilities.invokeLater(() -> {
-                for (int i = 0; i < jeu.getSize(); i++) {
-                    for (int j = 0; j < jeu.getSize(); j++) {
-                        Case c = jeu.getCase(i, j);
-                        int val = c.getValeur();
+        setSize(4 * PIXEL_PER_SQUARE + PIXEL_PER_SQUARE, (7) * (PIXEL_PER_SQUARE));
+        setTitle("2/0/4/8");
 
-                        if (val == 0) {
+        //JPanel principale
+        JPanel contentPane = new JPanel(new BorderLayout());
+        contentPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-                            tabC[i][j].setText("");
+        //JPanel pour les informations
+        JPanel infoPanel = new JPanel();
+        infoPanel.setPreferredSize(new Dimension(4 * PIXEL_PER_SQUARE * 2, PIXEL_PER_SQUARE));
 
-                        } else {
-                            tabC[i][j].setText(val + "");
-                        }
-                        tabC[i][j].setBackground(colorMap.get(val));
+        //Affichage du titre
+        JPanel titlePanel = new JPanel();
+        JLabel titleLabel = new JLabel("2048");
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        titleLabel.setForeground(Color.darkGray);
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 40));
+        titlePanel.add(titleLabel);
+        infoPanel.add(titlePanel);
+        contentPane.add(infoPanel, BorderLayout.NORTH);
 
-
-                    }
-                }
-                //On met à jour le score
-                nowScore.setText(String.valueOf(jeu.score));
-
-            });
-        }
-        //si la partie est finie
-        else {
-            //supprimerEcouteurClavier();
-            gameOver();
-        }
+        //affichage du joueur 1
+        contentPane.add(joueurs.get(0).afficherJoueur(),BorderLayout.CENTER);
+        setContentPane(contentPane);
     }
+
 
     /**
      * Fonction qui gère la fin du jeu en affichant une pop up
      */
-    private void gameOver(){
+    /*
+    public void gameOver(){
         SwingUtilities.invokeLater(() -> {
         nowRecord.setText(String.valueOf(jeu.highScore));});
 
@@ -401,35 +312,45 @@ public class Swing2048 extends JFrame implements Observer {
         jd.setLocationRelativeTo(this);
         jd.setVisible(true);
     }
+*/
 
-    /**
-     * Correspond à la fonctionnalité de Contrôleur : écoute les évènements, et déclenche des traitements sur le modèle
-     */
-    private void ajouterEcouteurClavier() {
-        keyAdapter = new KeyAdapter() { // new KeyAdapter() { ... } est une instance de classe anonyme, il s'agit d'un objet qui correspond au controleur dans MVC
-            @Override
-            public void keyPressed(KeyEvent e) {
-                switch(e.getKeyCode()) {  // on regarde quelle touche a été pressée
-                    case KeyEvent.VK_LEFT : jeu.update(Direction.gauche); break;
-                    case KeyEvent.VK_RIGHT : jeu.update(Direction.droite); break;
-                    case KeyEvent.VK_DOWN : jeu.update(Direction.bas); break;
-                    case KeyEvent.VK_UP : jeu.update(Direction.haut); break;
-                    case KeyEvent.VK_ENTER : jeu.rnd(); break;
-                }
-            }
-        };
-        addKeyListener(keyAdapter);
-    }
 
-    private void supprimerEcouteurClavier() {
-        removeKeyListener(keyAdapter);
-    }
+
 
 
 
     @Override
     public void update(Observable o, Object arg) {
-        rafraichir();
+        for (Joueur joueur: joueurs) {
+            joueur.rafraichir();
+        }
+    }
+
+    /**
+     * Correspond à la fonctionnalité de Contrôleur : écoute les évènements, et déclenche des traitements sur le modèle
+     */
+    private void ajouterEcouteurClavier() {
+        KeyAdapter keyAdapter = new KeyAdapter() { // new KeyAdapter() { ... } est une instance de classe anonyme, il s'agit d'un objet qui correspond au controleur dans MVC
+            @Override
+            public void keyPressed(KeyEvent e) {
+                Direction direction = Direction.bas;
+                switch(e.getKeyCode()) {  // on regarde quelle touche a été pressée
+                    case KeyEvent.VK_LEFT : direction = Direction.gauche; break;
+                    case KeyEvent.VK_RIGHT : direction = Direction.droite; break;
+                    case KeyEvent.VK_DOWN : direction = Direction.bas; break;
+                    case KeyEvent.VK_UP : direction = Direction.haut; break;
+                    //case KeyEvent.VK_ENTER : jeu.rnd(); break;
+                }
+
+                //On bouge tous les joueurs
+                for (Joueur joueur: joueurs) {
+                    joueur.jeu.update(direction);
+                }
+            }
+        };
+
+        addKeyListener(keyAdapter);
+
     }
 
     /* NE PAS TOUCHER
