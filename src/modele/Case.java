@@ -39,7 +39,7 @@ public class Case {
      * Décide si la case doit de déplacer ou fusionner dans la direction d
      * @param d Direction dans laquelle la case veut se déplacer
      */
-    public boolean move (Direction d) {
+    public boolean move (Action d) {
         boolean ret = false;
         if(valeur == 0) return ret;
 
@@ -52,7 +52,7 @@ public class Case {
             }
 
             //Fusion
-            //if (caseAdj.aFusionne) break;
+            if (caseAdj.aFusionne) break;
             if (caseAdj.valeur == this.valeur) {
                 caseAdj.valeur=this.valeur*2;
                 jeu.score += caseAdj.valeur;

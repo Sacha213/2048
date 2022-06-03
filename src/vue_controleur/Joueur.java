@@ -1,15 +1,11 @@
 package vue_controleur;
 
 import modele.Case;
-import modele.Direction;
 import modele.Jeu;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -32,6 +28,10 @@ public class Joueur implements Observer{
     public JPanel afficherJoueur(){
         jPanel = new JPanel(new BorderLayout());
 
+        //Affichage des informations
+        JPanel informationContainer = new JPanel();
+
+
         //affichage du score
         JPanel scoreContainer = new JPanel();
         JPanel scorePanel = new JPanel();
@@ -50,7 +50,31 @@ public class Joueur implements Observer{
         scorePanel.add(scoreLabel, BorderLayout.SOUTH);
         scoreContainer.add(scorePanel);
 
-        jPanel.add(scoreContainer, BorderLayout.NORTH);
+        informationContainer.add(scoreContainer);
+
+        if(swing2048.playType==1){
+            //Affichage du record
+            JPanel recordContainer = new JPanel();
+            recordContainer.setLayout(new BorderLayout());
+            recordContainer.setPreferredSize(new Dimension(90, 40));
+            recordContainer.setBackground(Color.gray);
+
+            JLabel titleRecord = new JLabel("Record");
+            titleRecord.setFont(new Font("Serif", Font.PLAIN, 15));
+            titleRecord.setForeground(Color.white);
+            titleRecord.setHorizontalAlignment(SwingConstants.CENTER);
+            recordContainer.add(titleRecord, BorderLayout.NORTH);
+
+            JLabel recordLabel = new JLabel(String.valueOf(jeu.highScore));
+            recordLabel.setFont(new Font("Serif", Font.BOLD, 20));
+            recordLabel.setForeground(Color.white);
+            recordLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            recordContainer.add(recordLabel, BorderLayout.SOUTH);
+            informationContainer.add(recordContainer);
+        }
+
+
+        jPanel.add(informationContainer, BorderLayout.NORTH);
 
         JPanel grilleContainer = new JPanel();
         JPanel grillePanel = new JPanel(new GridLayout(jeu.getSize(), jeu.getSize(), -3, -3));
@@ -111,11 +135,13 @@ public class Joueur implements Observer{
         //si la partie est finie
         else {
             //supprimerEcouteurClavier();
-            gameOver();
+            swing2048.gameOver();
         }
 
 
     }
+
+    /*
 
     public void gameOver(){
         SwingUtilities.invokeLater(() -> {
@@ -163,7 +189,7 @@ public class Joueur implements Observer{
         jd.setLocationRelativeTo(swing2048);
         jd.setVisible(true);
     }
-
+    */
 
     @Override
     public void update(Observable o, Object arg) {

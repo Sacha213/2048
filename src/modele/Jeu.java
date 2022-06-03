@@ -54,7 +54,7 @@ public class Jeu extends Observable {
      * @param c Case à partir de laquelle on recherche
      * @return Case adjacente de la case c dans la direction d ou une case de valeur -1 si on atteint une bordure
      */
-    public Case getCaseAdj(Direction d, Case c) {
+    public Case getCaseAdj(Action d, Case c) {
         Point p = (Point)map.get(c).clone();
         //se décale d'une case dans la direction d
         switch(d) {
@@ -83,7 +83,7 @@ public class Jeu extends Observable {
      * @param d Direction dans laquelle déplacer la case
      * @param c Case à déplacer
      */
-    public void moveCase(Direction d, Case c) {
+    public void moveCase(Action d, Case c) {
         Case caseAdj = getCaseAdj(d, c);
         Point pAdj = map.get(caseAdj);
 
@@ -92,7 +92,11 @@ public class Jeu extends Observable {
         //On libère la case initiale
         delete(c);
         //On bouge la case dans la map
+        //*
+        map.remove(caseAdj);
+        //*
         map.put(c, pAdj);
+
 
     }
 
@@ -104,6 +108,7 @@ public class Jeu extends Observable {
         //récupère la position de la case a supprimer
         Point p = map.get(c);
         tabCases[p.x][p.y] = new Case(0, this);
+        map.remove(c);
         map.put(tabCases[p.x][p.y],p);
     }
 
@@ -113,21 +118,20 @@ public class Jeu extends Observable {
      * Le balayage se fait de droite à gauche et de bas en haut pour les direction "droite" et "bas"
      * @param d Direction dans laquelle déplacer toutes les cases
      */
-    public void update(Direction d){
-        //On sauvegarde le jeu actuelle
-        //sauvegarde.add(map);
+    public void update(Action a){
+
         
         // permet de libérer le processus graphique ou de la console
         new Thread(() -> {
             //parcours du tableau
             boolean moved = false;
 
-            switch (d) {
+            switch (a) {
                 case gauche, haut:
                     for (int x = 0; x < tabCases.length; x++) {
                         for (int y = 0; y < tabCases.length; y++) {
                             //on regarde s'il y a eu un mouvement
-                            if (tabCases[x][y].move(d)) moved = true;
+                            if (tabCases[x][y].move(a)) moved = true;
                         }
                     }
                     break;
@@ -135,24 +139,41 @@ public class Jeu extends Observable {
                     for (int x = tabCases.length - 1; x >= 0; x--) {
                         for (int y = tabCases.length -1; y >= 0; y--) {
                             //on regarde s'il y a eu un mouvement
-                            if (tabCases[x][y].move(d)) moved = true;
+                            if (tabCases[x][y].move(a)) moved = true;
                         }
                     }
+                    break;
+                case start:
+                    rnd();
+                    break;
+                case back:
+                    goBack();
                     break;
                 default:
                     System.out.println("default");
                     break;
             }
             if (moved) {
+                //On sauvegarde le jeu actuelle
+                sauvegarde.add((HashMap<Case, Point>) map.clone());
                 drawCase();
+                System.out.println("Affichage des maps");
+                for (HashMap map:sauvegarde) {
+                    afficherMap(map);
+                }
             }
             //On réinitialise la variable de fusion
             for (int x = 0; x < tabCases.length; x++) {
                 for (int y = 0; y < tabCases.length; y++) {
                     tabCases[x][y].aFusionne = false;
+
                 }
             }
 
+            afficherMap();
+            System.out.println(
+                    "Map size : "+map.size()
+            );
             setChanged();
             notifyObservers();
 
@@ -166,15 +187,20 @@ public class Jeu extends Observable {
     }
 
     /**
-     * Fonction qui permet de revenir en arrière dans le jeu
-     * @param indice nombre de coups à enlever
+     * Fonction qui permet de revenir en arrière d'un coup dans le jeu
      */
-    public void goBack(int indice){
-        //On actualise la map
-        for (int i=0; i<indice; i++){
-            sauvegarde.remove(sauvegarde.size()-i-1);
+    public void goBack(){
+        System.out.println("Affichage des maps");
+        for (HashMap map:sauvegarde) {
+            afficherMap(map);
         }
+
+        //On actualise la map
+        if (sauvegarde.size() == 1) return;
+        sauvegarde.remove(sauvegarde.size()-1);
+
         map = sauvegarde.get(sauvegarde.size()-1);
+
 
         //On actualise le tableau
         for (Case c: map.keySet()) {
@@ -183,6 +209,11 @@ public class Jeu extends Observable {
             tabCases[p.x][p.y]=c;
         }
 
+
+
+
+        setChanged();
+        notifyObservers();
 
     }
 
@@ -215,10 +246,10 @@ public class Jeu extends Observable {
                 //on regarde si la case est libre
                 if (caseValeur == 0) return false;
                 //on regarde toutes les cases adjacentes
-                if(getCaseAdj(Direction.gauche,c).getValeur() == caseValeur)return false;
-                if(getCaseAdj(Direction.droite,c).getValeur() == caseValeur)return false;
-                if(getCaseAdj(Direction.haut,c).getValeur() == caseValeur)return false;
-                if(getCaseAdj(Direction.bas,c).getValeur() == caseValeur)return false;
+                if(getCaseAdj(Action.gauche,c).getValeur() == caseValeur)return false;
+                if(getCaseAdj(Action.droite,c).getValeur() == caseValeur)return false;
+                if(getCaseAdj(Action.haut,c).getValeur() == caseValeur)return false;
+                if(getCaseAdj(Action.bas,c).getValeur() == caseValeur)return false;
             }
         }
 
@@ -276,6 +307,7 @@ public class Jeu extends Observable {
      * Tire une nouvelle grille aléatoirement, le nombre de cases remplies est aléatoire
      */
     public void rnd() {
+        map.clear();
         sauvegarde = new ArrayList<>();
         // permet de libérer le processus graphique ou de la console
         new Thread(() -> {
@@ -314,6 +346,8 @@ public class Jeu extends Observable {
             gameRunning = true;
             setChanged();
             notifyObservers();
+            afficherMap();
+
         }).start();
     }
 
@@ -329,6 +363,44 @@ public class Jeu extends Observable {
             }
             System.out.println("");
         }
+    }
+
+    public void afficherMap(){
+        for(int i =0; i<4; i++){
+            for(int j=0; j<4; j++){
+                Point p = new Point(i,j);
+                Case cc = null;
+                for (Case c: map.keySet()) {
+                    if(map.get(c).x == p.x && map.get(c).y==p.y){
+                        cc=c;
+                        break;
+                    }
+                }
+                System.out.print(" "+cc.getValeur()+" ");
+
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+    }
+
+    public void afficherMap(HashMap<Case,Point> map){
+        for(int i =0; i<4; i++){
+            for(int j=0; j<4; j++){
+                Point p = new Point(i,j);
+                Case cc = null;
+                for (Case c: map.keySet()) {
+                    if(map.get(c).x == p.x && map.get(c).y==p.y){
+                        cc=c;
+                        break;
+                    }
+                }
+                System.out.print(" "+cc.getValeur()+" ");
+
+            }
+            System.out.println("");
+        }
+        System.out.println("");
     }
 
 }

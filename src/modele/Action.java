@@ -3,6 +3,6 @@ package modele;
 /**
  * Énumération des directions de déplacement possibles
  */
-public enum Direction {
-    haut, bas, gauche, droite
+public enum Action {
+    haut, bas, gauche, droite, start, back
 }
