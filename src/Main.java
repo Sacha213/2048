@@ -33,10 +33,7 @@ public class Main {
      * Fonction qui gère la version console du 2048
      */
     public static void mainSwing() {
-
-        //Jeu jeu = new Jeu(4);
         Swing2048 vue = new Swing2048();
-        //jeu.addObserver(vue);
 
         vue.setVisible(true);
     }

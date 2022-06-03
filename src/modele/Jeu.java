@@ -1,6 +1,5 @@
 package modele;
 
-import java.awt.Point;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,7 +54,7 @@ public class Jeu extends Observable {
      * @return Case adjacente de la case c dans la direction d ou une case de valeur -1 si on atteint une bordure
      */
     public Case getCaseAdj(Action d, Case c) {
-        Point p = (Point)map.get(c).clone();
+        Point p = map.get(c).clone();
         //se décale d'une case dans la direction d
         switch(d) {
             case gauche :
@@ -116,7 +115,7 @@ public class Jeu extends Observable {
      * Fonction principale qui déplace toutes les cases dans un direction
      * Le balayage se fait de gauche à droite et de haut en bas pour les direction "gauche" et "haut"
      * Le balayage se fait de droite à gauche et de bas en haut pour les direction "droite" et "bas"
-     * @param d Direction dans laquelle déplacer toutes les cases
+     * @param a Direction dans laquelle déplacer toutes les cases
      */
     public void update(Action a){
 
@@ -154,9 +153,17 @@ public class Jeu extends Observable {
                     break;
             }
             if (moved) {
-                //On sauvegarde le jeu actuelle
-                sauvegarde.add((HashMap<Case, Point>) map.clone());
                 drawCase();
+
+                //On sauvegarde le jeu actuelle
+                HashMap<Case, Point> mapTemp = new HashMap<>();
+                for (Case c: map.keySet()) {
+                    Point p = map.get(c);
+                    mapTemp.put(c.clone(),p.clone());
+                }
+
+                sauvegarde.add(mapTemp);
+
                 System.out.println("Affichage des maps");
                 for (HashMap map:sauvegarde) {
                     afficherMap(map);
@@ -170,10 +177,7 @@ public class Jeu extends Observable {
                 }
             }
 
-            afficherMap();
-            System.out.println(
-                    "Map size : "+map.size()
-            );
+
             setChanged();
             notifyObservers();
 
@@ -190,16 +194,17 @@ public class Jeu extends Observable {
      * Fonction qui permet de revenir en arrière d'un coup dans le jeu
      */
     public void goBack(){
-        System.out.println("Affichage des maps");
-        for (HashMap map:sauvegarde) {
-            afficherMap(map);
-        }
-
         //On actualise la map
-        if (sauvegarde.size() == 1) return;
+        if (sauvegarde.size() == 0 || sauvegarde.size() == 1) return;
         sauvegarde.remove(sauvegarde.size()-1);
 
-        map = sauvegarde.get(sauvegarde.size()-1);
+        //On renvoie la sauvegarde dans la map
+        map.clear();
+        HashMap<Case, Point> mapTemp = sauvegarde.get(sauvegarde.size()-1);
+        for (Case c: mapTemp.keySet()) {
+            Point p = mapTemp.get(c);
+            map.put(c.clone(),p.clone());
+        }
 
 
         //On actualise le tableau
@@ -347,6 +352,14 @@ public class Jeu extends Observable {
             setChanged();
             notifyObservers();
             afficherMap();
+            //On sauvegarde le jeu actuelle
+            HashMap<Case, Point> mapTemp = new HashMap<>();
+            for (Case c: map.keySet()) {
+                Point p = map.get(c);
+                mapTemp.put(c.clone(),p.clone());
+            }
+
+            sauvegarde.add(mapTemp);
 
         }).start();
     }

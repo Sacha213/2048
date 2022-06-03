@@ -66,4 +66,9 @@ public class Case {
         return ret;
     }
 
+    public Case clone(){
+        return new Case(this.valeur, this.jeu);
+    }
+
+
 }

@@ -264,7 +264,7 @@ public class Swing2048 extends JFrame implements Observer {
         KeyAdapter keyAdapter = new KeyAdapter() { // new KeyAdapter() { ... } est une instance de classe anonyme, il s'agit d'un objet qui correspond au controleur dans MVC
             @Override
             public void keyPressed(KeyEvent e) {
-                Action action = Action.bas;
+                Action action;
                 switch(e.getKeyCode()) {  // on regarde quelle touche a été pressée
                     case KeyEvent.VK_LEFT : action = Action.gauche; break;
                     case KeyEvent.VK_RIGHT : action = Action.droite; break;
@@ -272,10 +272,12 @@ public class Swing2048 extends JFrame implements Observer {
                     case KeyEvent.VK_UP : action = Action.haut; break;
                     case KeyEvent.VK_ENTER : action = Action.start; break;
                     case KeyEvent.VK_BACK_SPACE : action = Action.back; break;
+                    default: action = null;
                 }
-
+                if(action == null) return;
                 //On bouge tous les joueurs
                 for (Joueur joueur: joueurs) {
+
                     joueur.jeu.update(action);
                 }
             }
