@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="fdee2054-3505-429b-adfd-0cca4a1c8596" name="Changes" comment="Affichage + pop up (part 1)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modele/Case.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modele/Case.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modele/Jeu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modele/Jeu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modele/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/modele/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/score.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/vue_controleur/Joueur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vue_controleur/Joueur.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vue_controleur/Swing2048.java" afterDir="false" />
     </list>
     <list id="5170b5ac-bf76-405c-8005-b2ae06072d83" name="Changes by lilia" comment="" />
@@ -81,6 +80,7 @@
       <workItem from="1653769474266" duration="6298000" />
       <workItem from="1654245485193" duration="1269000" />
       <workItem from="1654247029002" duration="6118000" />
+      <workItem from="1654352091589" duration="6478000" />
     </task>
     <task id="LOCAL-00001" summary="Affichage + pop up (part 1)">
       <created>1653471383349</created>

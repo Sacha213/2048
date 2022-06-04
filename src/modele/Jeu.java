@@ -91,12 +91,8 @@ public class Jeu extends Observable {
         //On libère la case initiale
         delete(c);
         //On bouge la case dans la map
-        //*
         map.remove(caseAdj);
-        //*
         map.put(c, pAdj);
-
-
     }
 
     /**
@@ -163,11 +159,6 @@ public class Jeu extends Observable {
                 }
 
                 sauvegarde.add(mapTemp);
-
-                System.out.println("Affichage des maps");
-                for (HashMap map:sauvegarde) {
-                    afficherMap(map);
-                }
             }
             //On réinitialise la variable de fusion
             for (int x = 0; x < tabCases.length; x++) {
@@ -176,7 +167,6 @@ public class Jeu extends Observable {
 
                 }
             }
-
 
             setChanged();
             notifyObservers();
@@ -206,16 +196,12 @@ public class Jeu extends Observable {
             map.put(c.clone(),p.clone());
         }
 
-
         //On actualise le tableau
         for (Case c: map.keySet()) {
             Point p = map.get(c);
 
             tabCases[p.x][p.y]=c;
         }
-
-
-
 
         setChanged();
         notifyObservers();
@@ -259,11 +245,10 @@ public class Jeu extends Observable {
         }
 
         return gameOver;
-
     }
 
     public void endGame() {
-        System.out.println("Partie finie !");
+        gameRunning = false;
         if(score > highScore) {
             highScore = score;
             File file = new File("./src/resources/score.txt");
@@ -274,16 +259,8 @@ public class Jeu extends Observable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-
         }
-        /*
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }*/
-        gameRunning = false;
+
         setChanged();
         notifyObservers();
     }
@@ -351,7 +328,6 @@ public class Jeu extends Observable {
             gameRunning = true;
             setChanged();
             notifyObservers();
-            afficherMap();
             //On sauvegarde le jeu actuelle
             HashMap<Case, Point> mapTemp = new HashMap<>();
             for (Case c: map.keySet()) {

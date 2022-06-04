@@ -25,6 +25,10 @@ public class Joueur implements Observer{
         swing2048 = swing;
     }
 
+    /**
+     * Crée le JPanel qui permet d'afficher le score et la grille de jeu
+     * @return JPanel du joueur
+     */
     public JPanel afficherJoueur(){
         jPanel = new JPanel(new BorderLayout());
 
@@ -141,56 +145,12 @@ public class Joueur implements Observer{
 
     }
 
-    /*
-
-    public void gameOver(){
-        SwingUtilities.invokeLater(() -> {
-            //nowRecord.setText(String.valueOf(jeu.highScore));
-        });
-
-        JDialog jd = new JDialog(swing2048,"Game Over");
-
-        jd.setLayout(new FlowLayout());
-
-        JLabel gameOver = new JLabel("Game Over !\n", SwingConstants.CENTER);
-        gameOver.setFont(gameOver.getFont().deriveFont(Font.BOLD, 16f));
-        JLabel message = new JLabel("Voulez vous rejouer?");
-
-        JButton rejouer = new JButton("Rejouer");
-        JButton quitter = new JButton("Quitter");
-        JButton debloquer = new JButton("Débloquer");
-        rejouer.addActionListener(e -> {
-            jd.setVisible(false);
-            jeu.rnd();
-            //ajouterEcouteurClavier();
-            System.out.println("Rejouer button pressed.");
-        });
-
-        quitter.addActionListener(e -> {
-            jd.setVisible(false);
-            System.exit(0);
-            System.out.println("Quitter button pressed.");
-        });
-
-        debloquer.addActionListener(e -> {
-            jd.setVisible(false);
-            jeu.deblocage();
-            jeu.gameRunning=true;
-            rafraichir();
-            System.out.println("Débloquer button pressed.");
-        });
-
-        jd.add(gameOver);
-        jd.add(message);
-        jd.add(rejouer);
-        jd.add(quitter);
-        if(jeu.nombreDeblocage>0) jd.add(debloquer);
-        jd.setSize(200,150);
-        jd.setLocationRelativeTo(swing2048);
-        jd.setVisible(true);
-    }
-    */
-
+    /**
+     * Fonction de base d'un observer, permet de rafraichir la vue
+     * @param o     the observable object.
+     * @param arg   an argument passed to the {@code notifyObservers}
+     *                 method.
+     */
     @Override
     public void update(Observable o, Object arg) {
         rafraichir();
