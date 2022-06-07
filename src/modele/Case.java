@@ -67,9 +67,11 @@ public class Case {
         return ret;
     }
 
+    /**
+     * Methode qui permet de cloner une case
+     * @return Une copie de la case
+     */
     public Case clone(){
         return new Case(this.valeur, this.jeu);
     }
-
-
 }

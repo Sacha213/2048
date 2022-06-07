@@ -15,16 +15,21 @@ public class Jeu extends Observable {
 
     private Case[][] tabCases;
     private static Random rnd = new Random();
-    public boolean gameRunning = true;
+    public boolean gameRunning;
     private HashMap<Case,Point> map;
     public int score, highScore, nombreDeblocage;
 
     public ArrayList<HashMap<Case,Point>> sauvegarde;
 
+    /**
+     * Constructeur de la classe Jeu
+     * @param size Taille du 2048
+     */
     public Jeu(int size) {
         score = 0;
         tabCases = new Case[size][size];
         map = new HashMap<Case,Point>();
+        gameRunning=true;
 
         rnd();
     }
@@ -247,6 +252,9 @@ public class Jeu extends Observable {
         return gameOver;
     }
 
+    /**
+     * Fonction qui arrête le jeu et écrit le nouveau record dans le fichier
+     */
     public void endGame() {
         gameRunning = false;
         if(score > highScore) {
@@ -354,42 +362,5 @@ public class Jeu extends Observable {
         }
     }
 
-    public void afficherMap(){
-        for(int i =0; i<4; i++){
-            for(int j=0; j<4; j++){
-                Point p = new Point(i,j);
-                Case cc = null;
-                for (Case c: map.keySet()) {
-                    if(map.get(c).x == p.x && map.get(c).y==p.y){
-                        cc=c;
-                        break;
-                    }
-                }
-                System.out.print(" "+cc.getValeur()+" ");
-
-            }
-            System.out.println("");
-        }
-        System.out.println("");
-    }
-
-    public void afficherMap(HashMap<Case,Point> map){
-        for(int i =0; i<4; i++){
-            for(int j=0; j<4; j++){
-                Point p = new Point(i,j);
-                Case cc = null;
-                for (Case c: map.keySet()) {
-                    if(map.get(c).x == p.x && map.get(c).y==p.y){
-                        cc=c;
-                        break;
-                    }
-                }
-                System.out.print(" "+cc.getValeur()+" ");
-
-            }
-            System.out.println("");
-        }
-        System.out.println("");
-    }
 
 }

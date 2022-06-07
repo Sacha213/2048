@@ -18,10 +18,9 @@ public class Swing2048 extends JFrame implements Observer {
     private ArrayList<Joueur> joueurs;
     public HashMap<Integer, Color> colorMap;
 
+    public int playType;
     //1 joueur  : playType = 1
     //2 joueurs : playType = 2
-    public int playType;
-
 
 
     /**
@@ -112,7 +111,9 @@ public class Swing2048 extends JFrame implements Observer {
         setVisible(true);
     }
 
-
+    /**
+     * Méthode qui crée la fenêtre de jeu multijoueur et crée 2 joueurs
+     */
     public void creerJeuMulti(){
         joueurs.clear();
         playType=2;
@@ -134,6 +135,9 @@ public class Swing2048 extends JFrame implements Observer {
         setContentPane(contentPane);
     }
 
+    /**
+     * Méthode qui crée la fenêtre de jeu solo et crée un joueur
+     */
     public void creerJeuSolo(){
         joueurs.clear();
         playType=1;
@@ -150,6 +154,10 @@ public class Swing2048 extends JFrame implements Observer {
         setContentPane(contentPane);
     }
 
+    /**
+     * Fonction qui crée un JPanel contenant les touches à utiliser ainsi que le titre "2048"
+     * @return JPanel complet
+     */
     public JPanel afficherRegles(){
         //JPanel pour les informations
         JPanel infoPanel = new JPanel(new GridLayout(0, 3));
@@ -198,13 +206,11 @@ public class Swing2048 extends JFrame implements Observer {
     /**
      * Fonction qui gère la fin du jeu en affichant une pop up
      */
-
     public void gameOver(){
         SwingUtilities.invokeLater(() -> {
 
-            //nowRecord.setText(String.valueOf(jeu.highScore));});
-
             JDialog jd = new JDialog(this,"Game Over");
+            jd.setUndecorated(true);
 
             jd.setLayout(new FlowLayout());
 
@@ -254,7 +260,12 @@ public class Swing2048 extends JFrame implements Observer {
         });
     }
 
-
+    /**
+     * Fonction de base d'un observer, permet de rafraichir la vue
+     * @param o     the observable object.
+     * @param arg   an argument passed to the {@code notifyObservers}
+     *                 method.
+     */
     @Override
     public void update(Observable o, Object arg) {
         for (Joueur joueur: joueurs) {

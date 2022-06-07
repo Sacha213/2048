@@ -9,6 +9,9 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Classe gérant le jeu et l'affichage de la grille de jeu
+ */
 public class Joueur implements Observer{
     private static final int PIXEL_PER_SQUARE = 90;
     public Jeu jeu;
@@ -17,6 +20,11 @@ public class Joueur implements Observer{
     private JPanel jPanel;
     private Swing2048 swing2048;
 
+    /**
+     * Constructeur de la classe Joueur
+     * @param nbCases nombre de cases de la grille de jeu
+     * @param swing référence sur la vue Swing
+     */
     public Joueur(int nbCases, Swing2048 swing){
         jeu = new Jeu(nbCases);
         jeu.addObserver(this);
@@ -110,7 +118,6 @@ public class Joueur implements Observer{
      */
     public void rafraichir()  {
         //si la partie n'est pas finie
-
         if (jeu.gameRunning) {
             // demande au processus graphique de réaliser le traitement
             SwingUtilities.invokeLater(() -> {
@@ -120,9 +127,7 @@ public class Joueur implements Observer{
                         int val = c.getValeur();
 
                         if (val == 0) {
-
                             tabC[i][j].setText("");
-
                         } else {
                             tabC[i][j].setText(val + "");
                         }
@@ -138,11 +143,9 @@ public class Joueur implements Observer{
         }
         //si la partie est finie
         else {
-            //supprimerEcouteurClavier();
             swing2048.gameOver();
+            jeu.gameRunning = true;
         }
-
-
     }
 
     /**

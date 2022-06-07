@@ -12,13 +12,13 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        //mainConsole();
-        mainSwing();
+        mainConsole();
+        //mainSwing();
 
     }
 
     /**
-     * Fonction qui gère la version graphique du 2048
+     * Fonction qui gère la version console du 2048
      */
     public static void mainConsole() {
         Jeu jeu = new Jeu(4);
@@ -26,11 +26,10 @@ public class Main {
         jeu.addObserver(vue);
 
         vue.start();
-
     }
 
     /**
-     * Fonction qui gère la version console du 2048
+     * Fonction qui gère la version graphique du 2048
      */
     public static void mainSwing() {
         Swing2048 vue = new Swing2048();

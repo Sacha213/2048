@@ -1,5 +1,6 @@
 package vue_controleur;
 
+import modele.Action;
 import modele.Case;
 import modele.Jeu;
 
@@ -64,13 +65,27 @@ public class Console2048 extends Thread implements Observer {
                             e.printStackTrace();
                         }
 
-                        if (s.equals("4") || s.equals("8") || s.equals("6") || s.equals("2") ) {
+                        Action action = null;
+                        switch (s){
+                            case "2":
+                                action = Action.bas;
+                                break;
+                            case "4":
+                                action = Action.gauche;
+                                break;
+                            case "6":
+                                action = Action.droite;
+                                break;
+                            case "8":
+                                action = Action.haut;
+                                break;
+                        }
+
+                        if(action!=null){
                             end = true;
-                            jeu.rnd();
+                            jeu.update(action);
                         }
                     }
-
-
                 }
 
             }
@@ -102,7 +117,10 @@ public class Console2048 extends Thread implements Observer {
 
     }
 
-    private void raffraichir() {
+    /**
+     * Méthode permettant de rafraichir l'affichage du jeu
+     */
+    private void rafraichir() {
         synchronized (this) {
             try {
                 notify();
@@ -113,8 +131,14 @@ public class Console2048 extends Thread implements Observer {
     }
 
 
+    /**
+     * Fonction de base d'un observer, permet de rafraichir la vue
+     * @param o     the observable object.
+     * @param arg   an argument passed to the {@code notifyObservers}
+     *                 method.
+     */
     @Override
     public void update(Observable o, Object arg) {
-        raffraichir();
+        rafraichir();
     }
 }
